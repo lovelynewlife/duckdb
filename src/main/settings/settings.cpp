@@ -9,11 +9,11 @@
 #include "duckdb/main/database.hpp"
 #include "duckdb/main/database_manager.hpp"
 #include "duckdb/main/query_profiler.hpp"
-#include "duckdb/parallel/task_scheduler.hpp"
+#include "duckdb/plugin/physical/parallel/task_scheduler.hpp"
 #include "duckdb/parser/parser.hpp"
 #include "duckdb/planner/expression_binder.hpp"
-#include "duckdb/storage/buffer_manager.hpp"
-#include "duckdb/storage/storage_manager.hpp"
+#include "duckdb/plugin/physical/storage/buffer_manager.hpp"
+#include "duckdb/plugin/physical/storage/storage_manager.hpp"
 
 namespace duckdb {
 

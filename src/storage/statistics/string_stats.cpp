@@ -1,7 +1,7 @@
 #include "duckdb/storage/statistics/string_stats.hpp"
 
 #include "duckdb/common/string_util.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/main/error_manager.hpp"
 #include "duckdb/storage/statistics/base_statistics.hpp"
 #include "utf8proc_wrapper.hpp"

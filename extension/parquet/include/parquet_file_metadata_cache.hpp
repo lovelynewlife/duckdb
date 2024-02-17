@@ -9,7 +9,7 @@
 
 #include "duckdb.hpp"
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/storage/object_cache.hpp"
+#include "duckdb/plugin/physical/storage/object_cache.hpp"
 #endif
 #include "parquet_types.h"
 

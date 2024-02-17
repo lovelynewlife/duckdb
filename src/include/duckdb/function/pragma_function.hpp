@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/parser/parsed_data/pragma_info.hpp"
 #include "duckdb/common/unordered_map.hpp"
 

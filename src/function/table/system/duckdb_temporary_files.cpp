@@ -1,5 +1,5 @@
 #include "duckdb/function/table/system_functions.hpp"
-#include "duckdb/storage/buffer_manager.hpp"
+#include "duckdb/plugin/physical/storage/buffer_manager.hpp"
 
 namespace duckdb {
 

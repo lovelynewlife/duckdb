@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "duckdb/common/radix.hpp"
+#include "duckdb/plugin/physical/common/radix.hpp"
 #include "test_helpers.hpp"
 
 #include <cfloat>

@@ -14,7 +14,7 @@
 #include "duckdb/planner/constraints/bound_check_constraint.hpp"
 #include "duckdb/planner/constraints/bound_not_null_constraint.hpp"
 #include "duckdb/planner/constraints/bound_foreign_key_constraint.hpp"
-#include "duckdb/storage/data_table.hpp"
+#include "duckdb/plugin/physical/storage/data_table.hpp"
 
 namespace duckdb {
 

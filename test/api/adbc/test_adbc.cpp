@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "duckdb/common/adbc/adbc.hpp"
+#include "duckdb/plugin/physical/common/adbc/adbc.hpp"
 #include "arrow/arrow_test_helper.hpp"
 #include <iostream>
 

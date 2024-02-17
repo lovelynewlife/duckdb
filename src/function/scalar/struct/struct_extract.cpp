@@ -1,5 +1,5 @@
 #include "duckdb/common/string_util.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/function/scalar/nested_functions.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"
 #include "duckdb/planner/expression/bound_parameter_expression.hpp"

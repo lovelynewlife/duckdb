@@ -1,5 +1,5 @@
 #include "duckdb/catalog/catalog_entry/index_catalog_entry.hpp"
-#include "duckdb/storage/index.hpp"
+#include "duckdb/plugin/physical/storage/index.hpp"
 
 namespace duckdb {
 

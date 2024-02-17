@@ -1,6 +1,6 @@
 #include "duckdb/catalog/catalog_entry/duck_index_entry.hpp"
-#include "duckdb/storage/data_table.hpp"
-#include "duckdb/execution/index/art/art.hpp"
+#include "duckdb/plugin/physical/storage/data_table.hpp"
+#include "duckdb/plugin/physical/execution/index/art/art.hpp"
 
 namespace duckdb {
 

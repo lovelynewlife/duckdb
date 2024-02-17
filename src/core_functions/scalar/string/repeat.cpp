@@ -1,5 +1,5 @@
 #include "duckdb/common/exception.hpp"
-#include "duckdb/common/vector_operations/binary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/binary_executor.hpp"
 #include "duckdb/core_functions/scalar/string_functions.hpp"
 
 #include <ctype.h>

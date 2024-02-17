@@ -5,9 +5,9 @@
 #include <sstream>
 
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/common/multi_file_reader.hpp"
+#include "duckdb/plugin/physical/common/file_system/multi_file_reader.hpp"
 #include "duckdb/common/types/blob.hpp"
-#include "duckdb/common/types/column/column_data_collection.hpp"
+#include "duckdb/plugin/physical/common/types/column/column_data_collection.hpp"
 #include "duckdb/main/config.hpp"
 #endif
 

@@ -3,9 +3,9 @@
 #include "duckdb/common/operator/cast_operators.hpp"
 #include "duckdb/common/types/string_type.hpp"
 #include "duckdb/common/types/value.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/common/unicode_bar.hpp"
-#include "duckdb/common/vector_operations/generic_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/generic_executor.hpp"
 
 namespace duckdb {
 

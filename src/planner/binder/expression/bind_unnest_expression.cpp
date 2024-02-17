@@ -12,7 +12,7 @@
 #include "duckdb/planner/expression/bound_unnest_expression.hpp"
 #include "duckdb/planner/binder.hpp"
 #include "duckdb/function/scalar/nested_functions.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 
 namespace duckdb {
 

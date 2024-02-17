@@ -10,7 +10,7 @@
 
 #include "duckdb/catalog/catalog_entry/function_entry.hpp"
 #include "duckdb/catalog/catalog_set.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/parser/parsed_data/create_scalar_function_info.hpp"
 
 namespace duckdb {

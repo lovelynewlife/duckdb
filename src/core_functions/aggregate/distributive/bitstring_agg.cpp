@@ -1,10 +1,10 @@
 #include "duckdb/core_functions/aggregate/distributive_functions.hpp"
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/types/null_value.hpp"
-#include "duckdb/common/vector_operations/aggregate_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/aggregate_executor.hpp"
 #include "duckdb/common/types/bit.hpp"
 #include "duckdb/storage/statistics/base_statistics.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/common/types/cast_helpers.hpp"
 #include "duckdb/common/operator/subtract.hpp"
 

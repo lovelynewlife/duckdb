@@ -1,6 +1,6 @@
 #include "duckdb/catalog/catalog_transaction.hpp"
 #include "duckdb/catalog/catalog.hpp"
-#include "duckdb/transaction/duck_transaction.hpp"
+#include "duckdb/plugin/physical/transaction/duck_transaction.hpp"
 #include "duckdb/main/database.hpp"
 
 namespace duckdb {

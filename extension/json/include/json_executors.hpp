@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "json_functions.hpp"
 
 namespace duckdb {

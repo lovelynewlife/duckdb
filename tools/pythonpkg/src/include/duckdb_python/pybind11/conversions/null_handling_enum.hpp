@@ -1,6 +1,6 @@
 #pragma once
 
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/common/common.hpp"
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/string_util.hpp"

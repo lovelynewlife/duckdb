@@ -1,6 +1,6 @@
 #include "shell_extension.hpp"
 #include "duckdb/main/extension_util.hpp"
-#include "duckdb/common/vector_operations/unary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/unary_executor.hpp"
 #include "duckdb/main/config.hpp"
 #include <stdio.h>
 #include <stdlib.h>

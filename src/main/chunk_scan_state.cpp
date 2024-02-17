@@ -1,4 +1,4 @@
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/main/chunk_scan_state.hpp"
 
 namespace duckdb {

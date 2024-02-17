@@ -12,10 +12,10 @@
 #ifndef DUCKDB_AMALGAMATION
 #include "duckdb/common/common.hpp"
 #include "duckdb/common/exception.hpp"
-#include "duckdb/common/multi_file_reader.hpp"
-#include "duckdb/common/multi_file_reader_options.hpp"
+#include "duckdb/plugin/physical/common/file_system/multi_file_reader.hpp"
+#include "duckdb/plugin/physical/common/file_system/multi_file_reader_options.hpp"
 #include "duckdb/common/string_util.hpp"
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/planner/filter/conjunction_filter.hpp"
 #include "duckdb/planner/filter/constant_filter.hpp"
 #include "duckdb/planner/filter/null_filter.hpp"

@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb/common/array.hpp"
-#include "duckdb/common/vector_operations/aggregate_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/aggregate_executor.hpp"
 #include "duckdb/function/aggregate_state.hpp"
 #include "duckdb/planner/bound_result_modifier.hpp"
 #include "duckdb/planner/expression.hpp"

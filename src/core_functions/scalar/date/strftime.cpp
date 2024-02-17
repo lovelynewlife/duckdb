@@ -1,7 +1,7 @@
 #include "duckdb/function/scalar/strftime_format.hpp"
 
-#include "duckdb/common/vector_operations/unary_executor.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/unary_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"
 #include "duckdb/planner/expression/bound_parameter_expression.hpp"
 #include "duckdb/core_functions/scalar/date_functions.hpp"

@@ -2,7 +2,7 @@
 
 #include "duckdb/catalog/catalog.hpp"
 #include "duckdb/catalog/catalog_search_path.hpp"
-#include "duckdb/common/http_state.hpp"
+#include "duckdb/plugin/physical/common/file_system/http_state.hpp"
 #include "duckdb/common/random_engine.hpp"
 #include "duckdb/common/serializer/buffered_file_writer.hpp"
 #include "duckdb/main/attached_database.hpp"
@@ -11,7 +11,7 @@
 #include "duckdb/main/database.hpp"
 #include "duckdb/main/database_manager.hpp"
 #include "duckdb/main/query_profiler.hpp"
-#include "duckdb/common/opener_file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/opener_file_system.hpp"
 
 namespace duckdb {
 

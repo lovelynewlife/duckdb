@@ -6,7 +6,7 @@
 #include "duckdb/parser/parsed_data/create_scalar_function_info.hpp"
 #include "duckdb/parser/parsed_data/create_table_function_info.hpp"
 #include "include/icu-datefunc.hpp"
-#include "duckdb/transaction/meta_transaction.hpp"
+#include "duckdb/plugin/physical/transaction/meta_transaction.hpp"
 
 namespace duckdb {
 

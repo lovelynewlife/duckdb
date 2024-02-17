@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb/parser/query_node.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "duckdb/planner/binder.hpp"
 #include "duckdb/planner/expression_binder.hpp"

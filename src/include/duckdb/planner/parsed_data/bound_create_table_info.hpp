@@ -12,11 +12,11 @@
 #include "duckdb/planner/bound_constraint.hpp"
 #include "duckdb/planner/expression.hpp"
 #include "duckdb/planner/logical_operator.hpp"
-#include "duckdb/storage/table/persistent_table_data.hpp"
+#include "duckdb/plugin/physical/storage/table/persistent_table_data.hpp"
 #include "duckdb/common/case_insensitive_map.hpp"
 #include "duckdb/catalog/catalog_entry/table_column_type.hpp"
 #include "duckdb/catalog/catalog_entry/column_dependency_manager.hpp"
-#include "duckdb/storage/table/table_index_list.hpp"
+#include "duckdb/plugin/physical/storage/table/table_index_list.hpp"
 #include "duckdb/catalog/dependency_list.hpp"
 
 namespace duckdb {

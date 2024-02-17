@@ -3,7 +3,7 @@
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/common/limits.hpp"
 #include "duckdb/common/types.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/common/vector.hpp"
 
 using namespace duckdb; // NOLINT

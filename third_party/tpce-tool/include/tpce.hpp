@@ -11,7 +11,7 @@
 #pragma once
 
 #include "duckdb/catalog/catalog.hpp"
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb.hpp"
 
 namespace tpce {

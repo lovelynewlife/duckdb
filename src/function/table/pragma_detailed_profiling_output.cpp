@@ -1,7 +1,7 @@
 #include "duckdb/catalog/catalog_entry/table_catalog_entry.hpp"
 #include "duckdb/catalog/catalog_entry/view_catalog_entry.hpp"
 #include "duckdb/common/limits.hpp"
-#include "duckdb/common/types/column/column_data_collection.hpp"
+#include "duckdb/plugin/physical/common/types/column/column_data_collection.hpp"
 #include "duckdb/function/table/system_functions.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "duckdb/main/client_data.hpp"

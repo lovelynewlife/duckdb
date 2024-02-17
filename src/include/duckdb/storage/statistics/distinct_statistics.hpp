@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb/common/atomic.hpp"
-#include "duckdb/common/types/hyperloglog.hpp"
+#include "duckdb/plugin/physical/common/types/hyperloglog.hpp"
 #include "duckdb/storage/statistics/base_statistics.hpp"
 
 namespace duckdb {

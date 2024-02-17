@@ -17,7 +17,7 @@
 #include "duckdb/common/types/interval.hpp"
 #include "duckdb/common/types/time.hpp"
 #include "duckdb/common/types/timestamp.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/common/types.hpp"
 #include "fast_float/fast_float.h"
 #include "fmt/format.h"

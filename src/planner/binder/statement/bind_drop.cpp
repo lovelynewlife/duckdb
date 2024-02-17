@@ -7,7 +7,7 @@
 #include "duckdb/catalog/catalog_entry/schema_catalog_entry.hpp"
 #include "duckdb/parser/parsed_data/drop_info.hpp"
 #include "duckdb/main/config.hpp"
-#include "duckdb/storage/storage_extension.hpp"
+#include "duckdb/plugin/physical/storage/storage_extension.hpp"
 
 namespace duckdb {
 

@@ -5,7 +5,7 @@
 #include "duckdb/main/client_context.hpp"
 #include "test_helpers.hpp"
 
-#include <duckdb/execution/executor.hpp>
+#include <duckdb/plugin/physical/execution/executor.hpp>
 #include <future>
 #include <thread>
 

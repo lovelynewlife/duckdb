@@ -1,6 +1,6 @@
 #pragma once
 
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 #include "duckdb/common/string_util.hpp"
 #include "duckdb_python/pybind11/pybind_wrapper.hpp"
 #include "duckdb_python/pybind11/gil_wrapper.hpp"

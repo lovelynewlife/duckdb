@@ -1,6 +1,6 @@
 #include "duckdb/common/limits.hpp"
 #include "duckdb/common/string_util.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/function/aggregate/distributive_functions.hpp"
 #include "duckdb/function/function_binder.hpp"
 #include "duckdb/main/config.hpp"

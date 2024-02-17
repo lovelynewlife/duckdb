@@ -4,7 +4,7 @@
 #include "duckdb/planner/filter/conjunction_filter.hpp"
 #include "duckdb/planner/operator/logical_comparison_join.hpp"
 #include "duckdb/planner/operator/logical_get.hpp"
-#include "duckdb/storage/data_table.hpp"
+#include "duckdb/plugin/physical/storage/data_table.hpp"
 #include "duckdb/catalog/catalog_entry/table_catalog_entry.hpp"
 #include "duckdb/common/printer.hpp"
 #include "duckdb/common/limits.hpp"

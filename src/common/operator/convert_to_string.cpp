@@ -1,6 +1,6 @@
 #include "duckdb/common/operator/convert_to_string.hpp"
 #include "duckdb/common/operator/string_cast.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 
 namespace duckdb {
 

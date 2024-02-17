@@ -10,7 +10,7 @@
 
 #include "duckdb/main/query_result.hpp"
 #include "duckdb/common/enums/pending_execution_result.hpp"
-#include "duckdb/execution/executor.hpp"
+#include "duckdb/plugin/physical/execution/executor.hpp"
 
 namespace duckdb {
 class ClientContext;

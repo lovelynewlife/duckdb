@@ -3,7 +3,7 @@
 #include "duckdb/parser/expression/constant_expression.hpp"
 #include "duckdb/planner/expression_binder/table_function_binder.hpp"
 #include "duckdb/parser/parsed_expression_iterator.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "re2/re2.h"
 
 namespace duckdb {

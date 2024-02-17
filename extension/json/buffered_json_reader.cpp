@@ -1,6 +1,6 @@
 #include "buffered_json_reader.hpp"
 
-#include "duckdb/common/file_opener.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_opener.hpp"
 #include "duckdb/common/serializer/deserializer.hpp"
 #include "duckdb/common/serializer/serializer.hpp"
 

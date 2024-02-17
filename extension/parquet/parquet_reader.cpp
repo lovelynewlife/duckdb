@@ -16,17 +16,17 @@
 #include "templated_column_reader.hpp"
 #include "thrift_tools.hpp"
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/common/file_system.hpp"
-#include "duckdb/common/hive_partitioning.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/hive_partitioning.hpp"
 #include "duckdb/common/pair.hpp"
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/common/types/date.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/planner/filter/conjunction_filter.hpp"
 #include "duckdb/planner/filter/constant_filter.hpp"
 #include "duckdb/planner/filter/null_filter.hpp"
 #include "duckdb/planner/table_filter.hpp"
-#include "duckdb/storage/object_cache.hpp"
+#include "duckdb/plugin/physical/storage/object_cache.hpp"
 #endif
 
 #include <cassert>

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/function/table_function.hpp"
 #include "duckdb/parser/parsed_data/copy_info.hpp"
 #include "duckdb/parser/statement/copy_statement.hpp"

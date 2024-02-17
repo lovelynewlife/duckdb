@@ -18,7 +18,7 @@
 #include "duckdb/main/prepared_statement.hpp"
 #include "duckdb/main/stream_query_result.hpp"
 #include "duckdb/main/table_description.hpp"
-#include "duckdb/transaction/transaction_context.hpp"
+#include "duckdb/plugin/physical/transaction/transaction_context.hpp"
 #include "duckdb/main/pending_query_result.hpp"
 #include "duckdb/common/atomic.hpp"
 #include "duckdb/main/client_config.hpp"

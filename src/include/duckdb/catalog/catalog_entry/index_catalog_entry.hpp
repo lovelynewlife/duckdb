@@ -10,7 +10,7 @@
 
 #include "duckdb/catalog/standard_entry.hpp"
 #include "duckdb/parser/parsed_data/create_index_info.hpp"
-#include "duckdb/storage/metadata/metadata_writer.hpp"
+#include "duckdb/plugin/physical/storage/metadata/metadata_writer.hpp"
 
 namespace duckdb {
 

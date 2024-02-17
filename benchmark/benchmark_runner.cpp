@@ -1,7 +1,7 @@
 #include "benchmark_runner.hpp"
 
 #include "duckdb/common/profiler.hpp"
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 #include "duckdb/common/string_util.hpp"
 #include "duckdb.hpp"
 #include "duckdb_benchmark.hpp"

@@ -1,6 +1,6 @@
 #include "include/imdb.hpp"
 #include "imdb_constants.hpp"
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 
 
 using namespace duckdb;

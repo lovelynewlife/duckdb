@@ -1,7 +1,7 @@
 #define DUCKDB_EXTENSION_MAIN
 #include "jemalloc_extension.hpp"
 
-#include "duckdb/common/allocator.hpp"
+#include "duckdb/plugin/physical/common/allocator.hpp"
 #include "jemalloc/jemalloc.h"
 
 #ifndef DUCKDB_NO_THREADS

@@ -1,7 +1,7 @@
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/types/date.hpp"
-#include "duckdb/common/vector_operations/binary_executor.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/binary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/function/scalar/nested_functions.hpp"
 #include "duckdb/function/scalar/string_functions.hpp"
 

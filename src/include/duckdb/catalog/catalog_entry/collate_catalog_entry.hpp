@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb/catalog/standard_entry.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/parser/parsed_data/create_collation_info.hpp"
 
 namespace duckdb {

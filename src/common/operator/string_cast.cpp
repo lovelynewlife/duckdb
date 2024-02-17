@@ -1,6 +1,6 @@
 #include "duckdb/common/types/cast_helpers.hpp"
 #include "duckdb/common/operator/string_cast.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/common/types/date.hpp"
 #include "duckdb/common/types/decimal.hpp"
 #include "duckdb/common/types/hugeint.hpp"

@@ -1,5 +1,5 @@
 #include "duckdb/main/capi/capi_internal.hpp"
-#include "duckdb/parallel/task_scheduler.hpp"
+#include "duckdb/plugin/physical/parallel/task_scheduler.hpp"
 
 using duckdb::DatabaseData;
 

@@ -3,7 +3,7 @@
 // NULL values are ignored. If all the values are NULL, or there are 0 rows, then the function returns NULL.
 
 #include "duckdb/common/exception.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/common/operator/comparison_operators.hpp"
 #include "duckdb/core_functions/aggregate/holistic_functions.hpp"
 #include "duckdb/planner/expression/bound_aggregate_expression.hpp"

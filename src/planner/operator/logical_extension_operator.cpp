@@ -1,5 +1,5 @@
 #include "duckdb/planner/operator/logical_extension_operator.hpp"
-#include "duckdb/execution/column_binding_resolver.hpp"
+#include "duckdb/plugin/physical/execution/column_binding_resolver.hpp"
 #include "duckdb/main/config.hpp"
 #include "duckdb/common/serializer/serializer.hpp"
 #include "duckdb/common/serializer/deserializer.hpp"

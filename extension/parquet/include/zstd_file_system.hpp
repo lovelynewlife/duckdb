@@ -10,7 +10,7 @@
 
 #include "duckdb.hpp"
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/common/compressed_file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/compressed_file_system.hpp"
 #endif
 
 namespace duckdb {

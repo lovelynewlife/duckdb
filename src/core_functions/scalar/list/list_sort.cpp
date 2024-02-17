@@ -1,12 +1,12 @@
 #include "duckdb/core_functions/scalar/list_functions.hpp"
 #include "duckdb/common/enum_util.hpp"
-#include "duckdb/common/types/chunk_collection.hpp"
+#include "duckdb/plugin/physical/common/types/chunk_collection.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"
 #include "duckdb/planner/expression/bound_cast_expression.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/planner/expression/bound_reference_expression.hpp"
 #include "duckdb/main/config.hpp"
-#include "duckdb/common/sort/sort.hpp"
+#include "duckdb/plugin/physical/common/sort/sort.hpp"
 
 namespace duckdb {
 

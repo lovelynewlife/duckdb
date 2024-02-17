@@ -1,8 +1,8 @@
 #include "duckdb/common/box_renderer.hpp"
 
 #include "duckdb/common/printer.hpp"
-#include "duckdb/common/types/column/column_data_collection.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/column/column_data_collection.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "utf8proc_wrapper.hpp"
 
 #include <sstream>

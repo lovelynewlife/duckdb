@@ -1,6 +1,6 @@
 #include "duckdb/optimizer/compressed_materialization.hpp"
 
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/function/scalar/operators.hpp"
 #include "duckdb/optimizer/column_binding_replacer.hpp"
 #include "duckdb/optimizer/topn_optimizer.hpp"

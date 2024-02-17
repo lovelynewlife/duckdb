@@ -2,7 +2,7 @@
 #include "duckdb/common/limits.hpp"
 #include "duckdb/common/operator/multiply.hpp"
 #include "duckdb/common/types/hugeint.hpp"
-#include "duckdb/common/types/arrow_aux_data.hpp"
+#include "duckdb/plugin/physical/common/types/arrow_aux_data.hpp"
 #include "duckdb/function/scalar/nested_functions.hpp"
 
 namespace duckdb {

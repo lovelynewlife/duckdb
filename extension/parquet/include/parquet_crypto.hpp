@@ -11,7 +11,7 @@
 #include "parquet_types.h"
 
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/storage/object_cache.hpp"
+#include "duckdb/plugin/physical/storage/object_cache.hpp"
 #endif
 
 namespace duckdb {

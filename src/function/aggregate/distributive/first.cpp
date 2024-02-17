@@ -1,6 +1,6 @@
 #include "duckdb/function/aggregate/distributive_functions.hpp"
 #include "duckdb/common/exception.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/planner/expression.hpp"
 
 namespace duckdb {

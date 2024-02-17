@@ -2,7 +2,7 @@
 
 #include "duckdb/common/types.hpp"
 #include "duckdb/common/types/string_type.hpp"
-#include "duckdb/common/types/string_heap.hpp"
+#include "duckdb/plugin/physical/common/types/string_heap.hpp"
 #include "duckdb/common/preserved_error.hpp"
 #include "duckdb.hpp"
 

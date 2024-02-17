@@ -1,7 +1,7 @@
 #include "duckdb/function/table/system_functions.hpp"
 
 #include "duckdb/catalog/catalog.hpp"
-#include "duckdb/storage/database_size.hpp"
+#include "duckdb/plugin/physical/storage/database_size.hpp"
 #include "duckdb/main/database_manager.hpp"
 #include "duckdb/function/function_set.hpp"
 namespace duckdb {

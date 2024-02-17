@@ -8,7 +8,7 @@
 #include "duckdb/common/types/interval.hpp"
 #include "duckdb/common/types/time.hpp"
 #include "duckdb/common/types/timestamp.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/common/enum_util.hpp"
 #include "duckdb/function/scalar/operators.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"

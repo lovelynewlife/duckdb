@@ -1,4 +1,4 @@
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/common/types/hash.hpp"

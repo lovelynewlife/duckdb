@@ -3,7 +3,7 @@
 #include "duckdb/common/serializer/binary_deserializer.hpp"
 #include "duckdb/common/serializer/binary_serializer.hpp"
 #include "duckdb/common/serializer/memory_stream.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/main/client_context.hpp"
 #include "duckdb/main/client_data.hpp"
 #include "duckdb/main/database.hpp"
@@ -11,7 +11,7 @@
 #include "duckdb/main/query_profiler.hpp"
 #include "duckdb/planner/binder.hpp"
 #include "duckdb/planner/expression/bound_parameter_expression.hpp"
-#include "duckdb/transaction/meta_transaction.hpp"
+#include "duckdb/plugin/physical/transaction/meta_transaction.hpp"
 
 namespace duckdb {
 

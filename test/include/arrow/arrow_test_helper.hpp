@@ -17,9 +17,9 @@
 #include "duckdb/main/client_config.hpp"
 #include "duckdb/main/database.hpp"
 #include "duckdb/function/table/arrow.hpp"
-#include "duckdb/common/arrow/arrow_appender.hpp"
-#include "duckdb/common/arrow/arrow_converter.hpp"
-#include "duckdb/common/arrow/arrow_wrapper.hpp"
+#include "duckdb/plugin/physical/common/arrow/arrow_appender.hpp"
+#include "duckdb/plugin/physical/common/arrow/arrow_converter.hpp"
+#include "duckdb/plugin/physical/common/arrow/arrow_wrapper.hpp"
 #include "duckdb/main/extension_helper.hpp"
 
 namespace duckdb {

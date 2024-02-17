@@ -6,9 +6,9 @@
 #include "duckdb/common/types/interval.hpp"
 #include "duckdb/common/types/timestamp.hpp"
 #include "duckdb/common/types/value.hpp"
-#include "duckdb/common/vector_operations/binary_executor.hpp"
-#include "duckdb/common/vector_operations/ternary_executor.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/binary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/ternary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/core_functions/scalar/date_functions.hpp"
 
 namespace duckdb {

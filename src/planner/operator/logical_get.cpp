@@ -6,7 +6,7 @@
 #include "duckdb/function/function_serialization.hpp"
 #include "duckdb/function/table/table_scan.hpp"
 #include "duckdb/main/config.hpp"
-#include "duckdb/storage/data_table.hpp"
+#include "duckdb/plugin/physical/storage/data_table.hpp"
 #include "duckdb/common/serializer/serializer.hpp"
 #include "duckdb/common/serializer/deserializer.hpp"
 

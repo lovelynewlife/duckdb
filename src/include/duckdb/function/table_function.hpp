@@ -10,8 +10,8 @@
 
 #include "duckdb/common/enums/operator_result_type.hpp"
 #include "duckdb/common/optional_ptr.hpp"
-#include "duckdb/execution/execution_context.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/plugin/physical/execution/execution_context.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/planner/bind_context.hpp"
 #include "duckdb/planner/logical_operator.hpp"
 #include "duckdb/storage/statistics/node_statistics.hpp"

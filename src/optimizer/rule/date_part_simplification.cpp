@@ -6,7 +6,7 @@
 #include "duckdb/optimizer/matcher/expression_matcher.hpp"
 #include "duckdb/optimizer/expression_rewriter.hpp"
 #include "duckdb/common/enums/date_part_specifier.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/function/function_binder.hpp"
 
 namespace duckdb {
