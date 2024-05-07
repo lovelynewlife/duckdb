@@ -2,7 +2,7 @@
 
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/crypto/md5.hpp"
-#include "duckdb/common/vector_operations/unary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/unary_executor.hpp"
 
 namespace duckdb {
 

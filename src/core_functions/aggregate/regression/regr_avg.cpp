@@ -1,8 +1,11 @@
 #include "duckdb/common/exception.hpp"
-#include "duckdb/common/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
 #include "duckdb/core_functions/aggregate/regression_functions.hpp"
 #include "duckdb/planner/expression/bound_aggregate_expression.hpp"
 #include "duckdb/function/function_set.hpp"
+
+// TODO
+#include "duckdb/function/aggregate_state.hpp"
 
 namespace duckdb {
 struct RegrState {

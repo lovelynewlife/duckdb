@@ -1,5 +1,5 @@
 #include "duckdb/main/extension_helper.hpp"
-#include "duckdb/common/gzip_file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/gzip_file_system.hpp"
 #include "duckdb/common/types/uuid.hpp"
 #include "duckdb/common/string_util.hpp"
 

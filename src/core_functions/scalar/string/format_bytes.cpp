@@ -1,5 +1,5 @@
 #include "duckdb/core_functions/scalar/string_functions.hpp"
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/common/string_util.hpp"
 
 namespace duckdb {

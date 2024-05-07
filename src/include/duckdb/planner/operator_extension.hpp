@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb/common/common.hpp"
-#include "duckdb/execution/physical_plan_generator.hpp"
+#include "duckdb/plugin/physical/execution/physical_plan_generator.hpp"
 #include "duckdb/planner/binder.hpp"
 
 namespace duckdb {

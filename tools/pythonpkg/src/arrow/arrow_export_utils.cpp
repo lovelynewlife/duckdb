@@ -7,7 +7,7 @@
 #include "duckdb/planner/filter/conjunction_filter.hpp"
 #include "duckdb/planner/filter/constant_filter.hpp"
 #include "duckdb/planner/table_filter.hpp"
-#include "duckdb/common/arrow/arrow_converter.hpp"
+#include "duckdb/plugin/physical/common/arrow/arrow_converter.hpp"
 
 #include "duckdb_python/pyconnection/pyconnection.hpp"
 #include "duckdb_python/pyrelation.hpp"

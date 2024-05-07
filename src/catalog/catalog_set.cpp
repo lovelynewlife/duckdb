@@ -11,8 +11,8 @@
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/parser/expression/constant_expression.hpp"
 #include "duckdb/parser/parsed_data/alter_table_info.hpp"
-#include "duckdb/transaction/duck_transaction.hpp"
-#include "duckdb/transaction/transaction_manager.hpp"
+#include "duckdb/plugin/physical/transaction/duck_transaction.hpp"
+#include "duckdb/plugin/physical/transaction/transaction_manager.hpp"
 
 namespace duckdb {
 

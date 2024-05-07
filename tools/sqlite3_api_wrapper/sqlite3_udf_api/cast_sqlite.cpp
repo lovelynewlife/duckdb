@@ -1,7 +1,7 @@
 #include "cast_sqlite.hpp"
 
-#include "duckdb/common/vector_operations/vector_operations.hpp"
-#include "duckdb/common/types/validity_mask.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/vector_operations.hpp"
+#include "duckdb/plugin/physical/common/types/vector/validity_mask.hpp"
 
 namespace duckdb {
 

@@ -2,8 +2,8 @@
 
 #include "duckdb/catalog/catalog.hpp"
 #include "duckdb/common/string_util.hpp"
-#include "duckdb/common/vector_operations/unary_executor.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/unary_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/function/scalar_function.hpp"
 #include "duckdb/main/config.hpp"
 #include "duckdb/main/connection.hpp"

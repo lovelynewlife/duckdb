@@ -1,4 +1,4 @@
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/function/scalar/nested_functions.hpp"
 #include "duckdb/function/scalar_function.hpp"
 #include "duckdb/function/built_in_functions.hpp"

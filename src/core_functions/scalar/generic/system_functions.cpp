@@ -5,7 +5,7 @@
 #include "duckdb/main/client_data.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"
 #include "duckdb/catalog/catalog_entry/aggregate_function_catalog_entry.hpp"
-#include "duckdb/transaction/duck_transaction.hpp"
+#include "duckdb/plugin/physical/transaction/duck_transaction.hpp"
 #include "duckdb/main/database_manager.hpp"
 
 namespace duckdb {

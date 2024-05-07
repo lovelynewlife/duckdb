@@ -1,6 +1,6 @@
 #include "duckdb/catalog/catalog_search_path.hpp"
 #include "duckdb/common/constants.hpp"
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/function/pragma/pragma_functions.hpp"
 #include "duckdb/main/config.hpp"

@@ -6,12 +6,12 @@
 #include "duckdb/catalog/catalog_entry/pragma_function_catalog_entry.hpp"
 #include "duckdb/parser/statement/multi_statement.hpp"
 #include "duckdb/parser/parsed_data/bound_pragma_info.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 
 #include "duckdb/main/client_context.hpp"
 
 #include "duckdb/common/string_util.hpp"
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 #include "duckdb/function/function_binder.hpp"
 
 namespace duckdb {

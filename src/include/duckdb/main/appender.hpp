@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/common/winapi.hpp"
 #include "duckdb/main/table_description.hpp"
 

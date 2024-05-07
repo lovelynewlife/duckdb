@@ -1,6 +1,6 @@
 #include "duckdb/storage/statistics/numeric_stats.hpp"
 #include "duckdb/storage/statistics/base_statistics.hpp"
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/common/operator/comparison_operators.hpp"
 
 #include "duckdb/common/serializer/serializer.hpp"

@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include "arrow/arrow_test_helper.hpp"
-#include "duckdb/common/adbc/single_batch_array_stream.hpp"
+#include "duckdb/plugin/physical/common/adbc/single_batch_array_stream.hpp"
 
 using namespace duckdb;
 

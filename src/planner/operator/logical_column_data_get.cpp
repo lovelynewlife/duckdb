@@ -1,6 +1,6 @@
 #include "duckdb/planner/operator/logical_column_data_get.hpp"
 
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/main/config.hpp"
 
 namespace duckdb {

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/catalog/catalog_transaction.hpp"
 
 namespace duckdb {

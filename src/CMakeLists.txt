@@ -58,12 +58,13 @@ else()
   add_subdirectory(function)
   add_subdirectory(catalog)
   add_subdirectory(common)
-  add_subdirectory(execution)
+  # add_subdirectory(execution)
   add_subdirectory(main)
-  add_subdirectory(parallel)
+  # add_subdirectory(parallel)
   add_subdirectory(storage)
-  add_subdirectory(transaction)
+  # add_subdirectory(transaction)
   add_subdirectory(verification)
+  add_subdirectory(plugin)
 
   set(DUCKDB_LINK_LIBS
       ${DUCKDB_SYSTEM_LIBS}

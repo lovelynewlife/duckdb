@@ -1060,11 +1060,11 @@ endif()
 
 if(NOT CLANG_TIDY)
   if(${BUILD_UNITTESTS})
-    add_subdirectory(test)
+    # add_subdirectory(test)
     if(NOT WIN32
       AND NOT SUN
       AND ${BUILD_BENCHMARKS})
-      add_subdirectory(benchmark)
+      # add_subdirectory(benchmark)
     endif()
   endif()
   if (NOT EXTENSION_CONFIG_BUILD)

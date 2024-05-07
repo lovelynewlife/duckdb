@@ -1,6 +1,6 @@
 #include "duckdb/main/capi/capi_internal.hpp"
 #include "duckdb/common/types/timestamp.hpp"
-#include "duckdb/common/allocator.hpp"
+#include "duckdb/plugin/physical/common/allocator.hpp"
 
 duckdb_data_chunk duckdb_stream_fetch_chunk(duckdb_result result) {
 	if (!result.internal_data) {

@@ -6,7 +6,7 @@
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/vector.hpp"
 #include "duckdb/common/types/date.hpp"
-#include "duckdb/storage/data_table.hpp"
+#include "duckdb/plugin/physical/storage/data_table.hpp"
 #include "nulls.h"
 #include "porting.h"
 

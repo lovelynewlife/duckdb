@@ -1,6 +1,6 @@
 #include "duckdb/optimizer/rule/regex_optimizations.hpp"
 
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"
 #include "duckdb/planner/expression/bound_constant_expression.hpp"
 #include "duckdb/function/scalar/string_functions.hpp"

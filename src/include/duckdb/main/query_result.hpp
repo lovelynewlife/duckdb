@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb/common/enums/statement_type.hpp"
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/common/winapi.hpp"
 #include "duckdb/common/preserved_error.hpp"
 #include "duckdb/main/client_properties.hpp"

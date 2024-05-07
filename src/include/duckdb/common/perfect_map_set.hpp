@@ -9,7 +9,6 @@
 #pragma once
 
 #include "duckdb/common/types.hpp"
-#include "duckdb/common/types/validity_mask.hpp"
 #include "duckdb/common/unordered_map.hpp"
 #include "duckdb/common/unordered_set.hpp"
 

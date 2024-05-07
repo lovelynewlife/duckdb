@@ -1,5 +1,5 @@
 #include "duckdb/function/table/arrow/arrow_duck_schema.hpp"
-#include "duckdb/common/arrow/arrow.hpp"
+#include "duckdb/plugin/physical/common/arrow/arrow.hpp"
 #include "duckdb/common/exception.hpp"
 
 namespace duckdb {

@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "test_helpers.hpp"
 
-#include "duckdb/storage/object_cache.hpp"
+#include "duckdb/plugin/physical/storage/object_cache.hpp"
 
 using namespace duckdb;
 using namespace std;

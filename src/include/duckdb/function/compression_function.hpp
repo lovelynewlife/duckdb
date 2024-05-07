@@ -9,12 +9,12 @@
 #pragma once
 
 #include "duckdb/common/common.hpp"
-#include "duckdb/function/function.hpp"
+#include "duckdb/sql_function/function.hpp"
 #include "duckdb/common/enums/compression_type.hpp"
 #include "duckdb/common/map.hpp"
-#include "duckdb/storage/storage_info.hpp"
+#include "duckdb/plugin/physical/storage/storage_info.hpp"
 #include "duckdb/common/mutex.hpp"
-#include "duckdb/storage/data_pointer.hpp"
+#include "duckdb/plugin/physical/storage/data_pointer.hpp"
 
 namespace duckdb {
 class DatabaseInstance;

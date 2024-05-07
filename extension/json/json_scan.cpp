@@ -1,12 +1,12 @@
 #include "json_scan.hpp"
 
 #include "duckdb/common/enum_util.hpp"
-#include "duckdb/common/multi_file_reader.hpp"
+#include "duckdb/plugin/physical/common/file_system/multi_file_reader.hpp"
 #include "duckdb/common/serializer/deserializer.hpp"
 #include "duckdb/common/serializer/serializer.hpp"
 #include "duckdb/main/extension_helper.hpp"
-#include "duckdb/parallel/task_scheduler.hpp"
-#include "duckdb/storage/buffer_manager.hpp"
+#include "duckdb/plugin/physical/parallel/task_scheduler.hpp"
+#include "duckdb/plugin/physical/storage/buffer_manager.hpp"
 
 namespace duckdb {
 

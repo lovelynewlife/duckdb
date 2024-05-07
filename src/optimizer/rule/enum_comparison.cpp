@@ -1,6 +1,6 @@
 #include "duckdb/optimizer/rule/enum_comparison.hpp"
 
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 #include "duckdb/planner/expression/bound_comparison_expression.hpp"
 #include "duckdb/planner/expression/bound_cast_expression.hpp"
 #include "duckdb/optimizer/matcher/type_matcher_id.hpp"

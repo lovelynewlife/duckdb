@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "duckdb/function/function.hpp"
-#include "duckdb/execution/expression_executor_state.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/sql_function/function.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor_state.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 
 namespace duckdb {
 

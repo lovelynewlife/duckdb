@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 #include "test_helpers.hpp"
 
 using namespace duckdb;

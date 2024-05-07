@@ -1,6 +1,6 @@
 #include "duckdb/common/exception.hpp"
 #include "duckdb/main/connection.hpp"
-#include "duckdb/storage/data_table.hpp"
+#include "duckdb/plugin/physical/storage/data_table.hpp"
 #include "duckdb/common/helper.hpp"
 
 #include "tpce_generated.hpp"

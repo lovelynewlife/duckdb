@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "duckdb/common/types/hyperloglog.hpp"
+#include "duckdb/plugin/physical/common/types/hyperloglog.hpp"
 
 #include <vector>
 

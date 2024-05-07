@@ -16,7 +16,7 @@
 #include "duckdb/common/unordered_set.hpp"
 #include "duckdb/common/mutex.hpp"
 #include "duckdb/parser/column_definition.hpp"
-#include "duckdb/transaction/transaction.hpp"
+#include "duckdb/plugin/physical/transaction/transaction.hpp"
 #include "duckdb/catalog/catalog_transaction.hpp"
 #include "duckdb/catalog/similar_catalog_entry.hpp"
 #include <functional>

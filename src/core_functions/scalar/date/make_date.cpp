@@ -2,8 +2,8 @@
 #include "duckdb/common/types/date.hpp"
 #include "duckdb/common/types/time.hpp"
 #include "duckdb/common/types/timestamp.hpp"
-#include "duckdb/common/vector_operations/ternary_executor.hpp"
-#include "duckdb/common/vector_operations/senary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/ternary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/senary_executor.hpp"
 
 #include <cmath>
 

@@ -30,7 +30,7 @@
  */
 
 #include "duckdb/common/vector.hpp"
-#include "duckdb/common/types/hyperloglog.hpp"
+#include "duckdb/plugin/physical/common/types/hyperloglog.hpp"
 
 #include "hyperloglog.hpp"
 #include "sds.hpp"

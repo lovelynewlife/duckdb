@@ -1,4 +1,4 @@
-#include "duckdb/common/multi_file_reader.hpp"
+#include "duckdb/plugin/physical/common/file_system/multi_file_reader.hpp"
 #include "json_functions.hpp"
 #include "json_scan.hpp"
 #include "json_structure.hpp"

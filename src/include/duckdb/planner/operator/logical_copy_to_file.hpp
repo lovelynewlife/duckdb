@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "duckdb/common/filename_pattern.hpp"
-#include "duckdb/common/local_file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/filename_pattern.hpp"
+#include "duckdb/plugin/physical/common/file_system/local_file_system.hpp"
 #include "duckdb/function/copy_function.hpp"
 #include "duckdb/planner/logical_operator.hpp"
 

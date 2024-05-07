@@ -10,7 +10,7 @@
 
 #include "buffered_json_reader.hpp"
 #include "json_enums.hpp"
-#include "duckdb/common/multi_file_reader.hpp"
+#include "duckdb/plugin/physical/common/file_system/multi_file_reader.hpp"
 #include "duckdb/common/mutex.hpp"
 #include "duckdb/common/pair.hpp"
 #include "duckdb/common/types/type_map.hpp"

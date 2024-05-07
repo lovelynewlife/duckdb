@@ -9,7 +9,7 @@
 #pragma once
 
 #include "duckdb.h"
-#include "duckdb/execution/executor.hpp"
+#include "duckdb/plugin/physical/execution/executor.hpp"
 #include "duckdb/common/mutex.hpp"
 #include "duckdb/common/profiler.hpp"
 #include "duckdb/common/progress_bar/progress_bar_display.hpp"

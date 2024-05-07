@@ -1,10 +1,10 @@
 #include "udf_struct_sqlite3.h"
 #include "sqlite3_value_type.hpp"
 
-#include "duckdb/common/types/vector.hpp"
+#include "duckdb/plugin/physical/common/types/vector/vector.hpp"
 #include "duckdb/common/constants.hpp"
 #include "duckdb/common/operator/cast_operators.hpp"
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/common/operator/string_cast.hpp"
 
 namespace duckdb {

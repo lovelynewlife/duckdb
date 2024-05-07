@@ -3,14 +3,14 @@
 #include "crypto.hpp"
 #include "duckdb.hpp"
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/common/http_state.hpp"
+#include "duckdb/plugin/physical/common/file_system/http_state.hpp"
 #include "duckdb/common/thread.hpp"
 #include "duckdb/common/types/timestamp.hpp"
 #include "duckdb/function/scalar/strftime_format.hpp"
 #endif
 
 #include <duckdb/function/scalar/string_functions.hpp>
-#include <duckdb/storage/buffer_manager.hpp>
+#include <duckdb/plugin/physical/storage/buffer_manager.hpp>
 #include <iostream>
 #include <thread>
 

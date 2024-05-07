@@ -1,5 +1,5 @@
 #include "duckdb/common/pair.hpp"
-#include "duckdb/common/types/list_segment.hpp"
+#include "duckdb/plugin/physical/common/types/list_segment.hpp"
 #include "duckdb/core_functions/aggregate/nested_functions.hpp"
 #include "duckdb/planner/expression/bound_aggregate_expression.hpp"
 

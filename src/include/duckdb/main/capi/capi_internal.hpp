@@ -11,7 +11,7 @@
 #include "duckdb.h"
 #include "duckdb.hpp"
 #include "duckdb/common/types.hpp"
-#include "duckdb/common/types/data_chunk.hpp"
+#include "duckdb/plugin/physical/common/types/data_chunk.hpp"
 #include "duckdb/main/appender.hpp"
 #include "duckdb/common/case_insensitive_map.hpp"
 

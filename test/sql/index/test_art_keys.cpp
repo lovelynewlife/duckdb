@@ -1,7 +1,7 @@
 #include "catch.hpp"
-#include "duckdb/common/radix.hpp"
+#include "duckdb/plugin/physical/common/radix.hpp"
 #include "duckdb/common/types/string_type.hpp"
-#include "duckdb/execution/index/art/art_key.hpp"
+#include "duckdb/plugin/physical/execution/index/art/art_key.hpp"
 
 #include <cstring>
 #include <iostream>

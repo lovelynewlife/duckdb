@@ -1,5 +1,5 @@
 #include "duckdb/main/prepared_statement_data.hpp"
-#include "duckdb/execution/physical_operator.hpp"
+#include "duckdb/plugin/physical/execution/physical_operator.hpp"
 #include "duckdb/parser/sql_statement.hpp"
 
 namespace duckdb {

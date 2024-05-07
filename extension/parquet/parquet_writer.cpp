@@ -6,7 +6,7 @@
 #include "parquet_timestamp.hpp"
 
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/common/file_system.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
 #include "duckdb/common/serializer/buffered_file_writer.hpp"
 #include "duckdb/common/serializer/write_stream.hpp"
 #include "duckdb/common/string_util.hpp"

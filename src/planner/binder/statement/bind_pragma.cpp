@@ -5,7 +5,7 @@
 #include "duckdb/catalog/catalog.hpp"
 #include "duckdb/function/function_binder.hpp"
 #include "duckdb/planner/expression_binder/constant_binder.hpp"
-#include "duckdb/execution/expression_executor.hpp"
+#include "duckdb/plugin/physical/execution/expression_executor.hpp"
 
 namespace duckdb {
 

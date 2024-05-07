@@ -5,8 +5,8 @@
 
 #include "duckdb.hpp"
 #ifndef DUCKDB_AMALGAMATION
-#include "duckdb/common/file_system.hpp"
-#include "duckdb/common/allocator.hpp"
+#include "duckdb/plugin/physical/common/file_system/file_system.hpp"
+#include "duckdb/plugin/physical/common/allocator.hpp"
 #endif
 
 namespace duckdb {

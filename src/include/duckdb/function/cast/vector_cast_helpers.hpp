@@ -9,8 +9,8 @@
 #pragma once
 
 #include "duckdb/function/cast/default_casts.hpp"
-#include "duckdb/common/vector_operations/unary_executor.hpp"
-#include "duckdb/common/vector_operations/general_cast.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/unary_executor.hpp"
+#include "duckdb/plugin/physical/common/types/vector_operations/general_cast.hpp"
 #include "duckdb/common/operator/decimal_cast_operators.hpp"
 #include "duckdb/common/likely.hpp"
 #include "duckdb/common/string_map_set.hpp"
