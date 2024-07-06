@@ -182,6 +182,14 @@ void DataChunk::ReferenceColumns(DataChunk &other, const vector<column_t> &colum
 	SetCardinality(other.size());
 }
 
+void DataChunk::Resize(idx_t count){
+	auto new_capacity = NextPowerOfTwo(count);
+	for(idx_t i = 0;i < ColumnCount();i++){
+		data[i].Resize(size(), new_capacity);
+	}
+	capacity = new_capacity;
+}
+
 void DataChunk::Append(const DataChunk &other, bool resize, SelectionVector *sel, idx_t sel_count) {
 	idx_t new_size = sel ? size() + sel_count : size() + other.size();
 	if (other.size() == 0) {
@@ -192,11 +200,7 @@ void DataChunk::Append(const DataChunk &other, bool resize, SelectionVector *sel
 	}
 	if (new_size > capacity) {
 		if (resize) {
-			auto new_capacity = NextPowerOfTwo(new_size);
-			for (idx_t i = 0; i < ColumnCount(); i++) {
-				data[i].Resize(size(), new_capacity);
-			}
-			capacity = new_capacity;
+			Resize(new_size);
 		} else {
 			throw InternalException("Can't append chunk to other chunk without resizing");
 		}

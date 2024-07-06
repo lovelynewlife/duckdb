@@ -22,6 +22,7 @@
 #include "duckdb/optimizer/rule/list.hpp"
 #include "duckdb/optimizer/statistics_propagator.hpp"
 #include "duckdb/optimizer/topn_optimizer.hpp"
+#include "duckdb/optimizer/udf_split.hpp"
 #include "duckdb/optimizer/unnest_rewriter.hpp"
 #include "duckdb/planner/binder.hpp"
 #include "duckdb/planner/planner.hpp"
@@ -192,6 +193,12 @@ unique_ptr<LogicalOperator> Optimizer::Optimize(unique_ptr<LogicalOperator> plan
 	RunOptimizer(OptimizerType::REORDER_FILTER, [&]() {
 		ExpressionHeuristics expression_heuristics(*this);
 		plan = expression_heuristics.Rewrite(std::move(plan));
+	});
+
+	// find the UDF and split it
+	RunOptimizer(OptimizerType::UDF_SPLITE, [&](){
+		UDFSplit udf_split;
+		plan = udf_split.Rewrite(std::move(plan));
 	});
 
 	for (auto &optimizer_extension : DBConfig::GetConfig(context).optimizer_extensions) {

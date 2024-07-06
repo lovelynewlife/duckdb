@@ -22,9 +22,9 @@ static py::list ConvertToSingleBatch(vector<LogicalType> &types, vector<string> 
                                      const ClientProperties &options) {
 	ArrowSchema schema;
 	ArrowConverter::ToArrowSchema(&schema, types, names, options);
-
+	auto init_count = input.size() > STANDARD_VECTOR_SIZE ?  NextPowerOfTwo(input.size()) : STANDARD_VECTOR_SIZE;
 	py::list single_batch;
-	ArrowAppender appender(types, STANDARD_VECTOR_SIZE, options);
+	ArrowAppender appender(types, init_count, options);
 	appender.Append(input, 0, input.size(), input.size());
 	auto array = appender.Finalize();
 	TransformDuckToArrowChunk(schema, array, single_batch);
@@ -82,8 +82,10 @@ static void ConvertPyArrowToDataChunk(const py::object &table, Vector &out, Clie
 
 	DataChunk result;
 	// Reserve for STANDARD_VECTOR_SIZE instead of count, in case the returned table contains too many tuples
-	result.Initialize(context, return_types, STANDARD_VECTOR_SIZE);
-
+	// but when use the udf-aware operator, the count may be larger than STANDARD_VECTOR_SIZE
+	auto init_count = count > STANDARD_VECTOR_SIZE ?  NextPowerOfTwo(count) : STANDARD_VECTOR_SIZE;
+	result.Initialize(context, return_types, init_count);
+    
 	vector<column_t> column_ids = {0};
 	TableFunctionInitInput input(bind_data.get(), column_ids, vector<idx_t>(), nullptr);
 	auto global_state = init_global(context, input);
@@ -94,7 +96,7 @@ static void ConvertPyArrowToDataChunk(const py::object &table, Vector &out, Clie
 	if (result.size() != count) {
 		throw InvalidInputException("Returned pyarrow table should have %d tuples, found %d", count, result.size());
 	}
-
+	out.Resize(0, init_count);
 	VectorOperations::Cast(context, result.data[0], out, count);
 }
 
@@ -146,7 +148,6 @@ static scalar_function_t CreateVectorizedFunction(PyObject *function, PythonExce
 		}
 		// Convert the pyarrow result back to a DuckDB datachunk
 		ConvertPyArrowToDataChunk(python_object, result, state.GetContext(), count);
-
 		if (input.AllConstant()) {
 			result.SetVectorType(VectorType::CONSTANT_VECTOR);
 		}

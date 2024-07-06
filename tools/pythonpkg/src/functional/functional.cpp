@@ -14,6 +14,7 @@ void DuckDBPyFunctional::Initialize(py::module_ &parent) {
 	py::enum_<duckdb::FunctionNullHandling>(m, "FunctionNullHandling")
 	    .value("DEFAULT", duckdb::FunctionNullHandling::DEFAULT_NULL_HANDLING)
 	    .value("SPECIAL", duckdb::FunctionNullHandling::SPECIAL_HANDLING)
+	    .value("UDF", duckdb::FunctionNullHandling::UDF_HANDLING)
 	    .export_values();
 }
 

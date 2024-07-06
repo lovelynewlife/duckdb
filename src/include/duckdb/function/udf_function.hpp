@@ -123,7 +123,7 @@ public:
 
 		AggregateFunction aggr_function(std::move(name), std::move(arguments), std::move(return_type), state_size,
 		                                initialize, update, combine, finalize, simple_update, bind, destructor);
-		aggr_function.null_handling = FunctionNullHandling::SPECIAL_HANDLING;
+		aggr_function.null_handling = FunctionNullHandling::UDF_HANDLING;
 		return aggr_function;
 	}
 

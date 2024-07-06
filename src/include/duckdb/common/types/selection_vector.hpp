@@ -31,7 +31,11 @@ struct SelectionVector {
 		Initialize(count);
 	}
 	SelectionVector(idx_t start, idx_t count) {
-		Initialize(STANDARD_VECTOR_SIZE);
+		if (STANDARD_VECTOR_SIZE < count) {
+			Initialize(count);
+		} else {
+			Initialize(STANDARD_VECTOR_SIZE);
+		}
 		for (idx_t i = 0; i < count; i++) {
 			set_index(i, start + i);
 		}

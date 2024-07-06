@@ -1,10 +1,10 @@
 #include "duckdb/planner/expression/bound_aggregate_expression.hpp"
-#include "duckdb/parser/expression/function_expression.hpp"
 
 #include "duckdb/catalog/catalog_entry/aggregate_function_catalog_entry.hpp"
 #include "duckdb/common/types/hash.hpp"
-#include "duckdb/planner/expression/bound_cast_expression.hpp"
 #include "duckdb/function/function_serialization.hpp"
+#include "duckdb/parser/expression/function_expression.hpp"
+#include "duckdb/planner/expression/bound_cast_expression.hpp"
 
 namespace duckdb {
 
@@ -61,8 +61,10 @@ bool BoundAggregateExpression::Equals(const BaseExpression &other_p) const {
 }
 
 bool BoundAggregateExpression::PropagatesNullValues() const {
-	return function.null_handling == FunctionNullHandling::SPECIAL_HANDLING ? false
-	                                                                        : Expression::PropagatesNullValues();
+	return function.null_handling == FunctionNullHandling::SPECIAL_HANDLING ||
+	               function.null_handling == FunctionNullHandling::UDF_HANDLING
+	           ? false
+	           : Expression::PropagatesNullValues();
 }
 
 unique_ptr<Expression> BoundAggregateExpression::Copy() {

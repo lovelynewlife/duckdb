@@ -1,11 +1,12 @@
 #include "duckdb/planner/expression/bound_function_expression.hpp"
-#include "duckdb/parser/expression/function_expression.hpp"
+
 #include "duckdb/catalog/catalog_entry/scalar_function_catalog_entry.hpp"
-#include "duckdb/common/types/hash.hpp"
-#include "duckdb/function/function_serialization.hpp"
-#include "duckdb/common/serializer/serializer.hpp"
 #include "duckdb/common/serializer/deserializer.hpp"
+#include "duckdb/common/serializer/serializer.hpp"
+#include "duckdb/common/types/hash.hpp"
 #include "duckdb/core_functions/lambda_functions.hpp"
+#include "duckdb/function/function_serialization.hpp"
+#include "duckdb/parser/expression/function_expression.hpp"
 
 namespace duckdb {
 
@@ -43,8 +44,10 @@ string BoundFunctionExpression::ToString() const {
 	                                                                         is_operator);
 }
 bool BoundFunctionExpression::PropagatesNullValues() const {
-	return function.null_handling == FunctionNullHandling::SPECIAL_HANDLING ? false
-	                                                                        : Expression::PropagatesNullValues();
+	return function.null_handling == FunctionNullHandling::SPECIAL_HANDLING ||
+	               function.null_handling == FunctionNullHandling::UDF_HANDLING
+	           ? false
+	           : Expression::PropagatesNullValues();
 }
 
 hash_t BoundFunctionExpression::Hash() const {

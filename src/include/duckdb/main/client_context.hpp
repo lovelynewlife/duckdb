@@ -85,6 +85,10 @@ public:
 	unique_ptr<ClientData> client_data;
 	//! Data for the currently running transaction
 	TransactionContext transaction;
+	//! Record the count of UDF save_chunk
+	int udf_count = -1;
+	//! Record zero pipeline status
+	bool zero_pipeline = false;
 
 public:
 	MetaTransaction &ActiveTransaction() {

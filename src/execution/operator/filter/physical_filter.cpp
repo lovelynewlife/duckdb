@@ -1,7 +1,8 @@
 #include "duckdb/execution/operator/filter/physical_filter.hpp"
+
 #include "duckdb/execution/expression_executor.hpp"
-#include "duckdb/planner/expression/bound_conjunction_expression.hpp"
 #include "duckdb/parallel/thread_context.hpp"
+#include "duckdb/planner/expression/bound_conjunction_expression.hpp"
 namespace duckdb {
 
 PhysicalFilter::PhysicalFilter(vector<LogicalType> types, vector<unique_ptr<Expression>> select_list,

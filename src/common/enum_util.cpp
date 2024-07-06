@@ -2355,6 +2355,8 @@ const char* EnumUtil::ToChars<FunctionNullHandling>(FunctionNullHandling value) 
 		return "DEFAULT_NULL_HANDLING";
 	case FunctionNullHandling::SPECIAL_HANDLING:
 		return "SPECIAL_HANDLING";
+	case FunctionNullHandling::UDF_HANDLING:
+		return "UDF_HANDLING";
 	default:
 		throw NotImplementedException(StringUtil::Format("Enum value: '%d' not implemented", value));
 	}
@@ -2367,6 +2369,9 @@ FunctionNullHandling EnumUtil::FromString<FunctionNullHandling>(const char *valu
 	}
 	if (StringUtil::Equals(value, "SPECIAL_HANDLING")) {
 		return FunctionNullHandling::SPECIAL_HANDLING;
+	}
+	if (StringUtil::Equals(value, "UDF_HANDLING")) {
+		return FunctionNullHandling::UDF_HANDLING;
 	}
 	throw NotImplementedException(StringUtil::Format("Enum value: '%s' not implemented", value));
 }

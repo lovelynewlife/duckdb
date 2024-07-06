@@ -323,11 +323,11 @@ idx_t DBConfig::GetSystemMaxThreads(FileSystem &fs) {
 }
 
 void DBConfig::SetDefaultMaxThreads() {
-#ifndef DUCKDB_NO_THREADS
-	options.maximum_threads = GetSystemMaxThreads(*file_system);
-#else
+// #ifndef DUCKDB_NO_THREADS
+// 	options.maximum_threads = GetSystemMaxThreads(*file_system);
+// #else
 	options.maximum_threads = 1;
-#endif
+// #endif
 }
 
 idx_t DBConfig::ParseMemoryLimit(const string &arg) {

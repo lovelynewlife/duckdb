@@ -2,8 +2,8 @@
 
 #include "duckdb/common/vector_operations/vector_operations.hpp"
 #include "duckdb/execution/execution_context.hpp"
-#include "duckdb/storage/statistics/base_statistics.hpp"
 #include "duckdb/planner/expression/list.hpp"
+#include "duckdb/storage/statistics/base_statistics.hpp"
 
 namespace duckdb {
 
@@ -71,7 +71,6 @@ void ExpressionExecutor::Execute(DataChunk *input, DataChunk &result) {
 	SetChunk(input);
 	D_ASSERT(expressions.size() == result.ColumnCount());
 	D_ASSERT(!expressions.empty());
-
 	for (idx_t i = 0; i < expressions.size(); i++) {
 		ExecuteExpression(i, result.data[i]);
 	}
@@ -92,6 +91,7 @@ idx_t ExpressionExecutor::SelectExpression(DataChunk &input, SelectionVector &se
 	states[0]->profiler.EndSample(chunk ? chunk->size() : 0);
 	return selected_tuples;
 }
+
 
 void ExpressionExecutor::ExecuteExpression(Vector &result) {
 	D_ASSERT(expressions.size() == 1);

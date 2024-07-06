@@ -31,7 +31,8 @@ enum class OptimizerType : uint32_t {
 	COMPRESSED_MATERIALIZATION,
 	DUPLICATE_GROUPS,
 	REORDER_FILTER,
-	EXTENSION
+	EXTENSION,
+	UDF_SPLITE
 };
 
 string OptimizerTypeToString(OptimizerType type);

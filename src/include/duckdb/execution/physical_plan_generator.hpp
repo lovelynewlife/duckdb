@@ -90,6 +90,7 @@ protected:
 	unique_ptr<PhysicalOperator> CreatePlan(LogicalMaterializedCTE &op);
 	unique_ptr<PhysicalOperator> CreatePlan(LogicalCTERef &op);
 	unique_ptr<PhysicalOperator> CreatePlan(LogicalPivot &op);
+	unique_ptr<PhysicalOperator> CreatePlan(LogicalUDF &op);
 
 	unique_ptr<PhysicalOperator> PlanAsOfJoin(LogicalComparisonJoin &op);
 	unique_ptr<PhysicalOperator> PlanComparisonJoin(LogicalComparisonJoin &op);

@@ -9,6 +9,7 @@ add_subdirectory(projection)
 add_subdirectory(scan)
 add_subdirectory(schema)
 add_subdirectory(set)
+add_subdirectory(udf)
 
 set(ALL_OBJECT_FILES
     ${ALL_OBJECT_FILES}

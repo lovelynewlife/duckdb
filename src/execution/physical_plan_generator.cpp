@@ -74,6 +74,9 @@ unique_ptr<PhysicalOperator> PhysicalPlanGenerator::CreatePlan(LogicalOperator &
 	case LogicalOperatorType::LOGICAL_PROJECTION:
 		plan = CreatePlan(op.Cast<LogicalProjection>());
 		break;
+	case LogicalOperatorType::LOGICAL_UDF:
+		plan = CreatePlan(op.Cast<LogicalUDF>()); 
+		break;
 	case LogicalOperatorType::LOGICAL_EMPTY_RESULT:
 		plan = CreatePlan(op.Cast<LogicalEmptyResult>());
 		break;

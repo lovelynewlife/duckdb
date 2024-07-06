@@ -12,7 +12,7 @@ void UDFWrapper::RegisterFunction(string name, vector<LogicalType> args, Logical
 
 	ScalarFunction scalar_function(std::move(name), std::move(args), std::move(ret_type), std::move(udf_function));
 	scalar_function.varargs = std::move(varargs);
-	scalar_function.null_handling = FunctionNullHandling::SPECIAL_HANDLING;
+	scalar_function.null_handling = FunctionNullHandling::UDF_HANDLING;
 	CreateScalarFunctionInfo info(scalar_function);
 	info.schema = DEFAULT_SCHEMA;
 	context.RegisterFunction(info);

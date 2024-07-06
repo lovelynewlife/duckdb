@@ -166,6 +166,9 @@ unique_ptr<LogicalOperator> LogicalOperator::Deserialize(Deserializer &deseriali
 	case LogicalOperatorType::LOGICAL_TRANSACTION:
 		result = LogicalSimple::Deserialize(deserializer);
 		break;
+	case LogicalOperatorType::LOGICAL_UDF:
+		result = LogicalUDF::Deserialize(deserializer);
+		break;
 	case LogicalOperatorType::LOGICAL_UNION:
 		result = LogicalSetOperation::Deserialize(deserializer);
 		break;
@@ -707,6 +710,17 @@ unique_ptr<LogicalOperator> LogicalTopN::Deserialize(Deserializer &deserializer)
 	auto limit = deserializer.ReadPropertyWithDefault<idx_t>(201, "limit");
 	auto offset = deserializer.ReadPropertyWithDefault<idx_t>(202, "offset");
 	auto result = duckdb::unique_ptr<LogicalTopN>(new LogicalTopN(std::move(orders), limit, offset));
+	return std::move(result);
+}
+
+void LogicalUDF::Serialize(Serializer &serializer) const {
+	LogicalOperator::Serialize(serializer);
+	serializer.WritePropertyWithDefault<vector<unique_ptr<Expression>>>(200, "expressions", expressions);
+}
+
+unique_ptr<LogicalOperator> LogicalUDF::Deserialize(Deserializer &deserializer) {
+	auto result = duckdb::unique_ptr<LogicalUDF>(new LogicalUDF());
+	deserializer.ReadPropertyWithDefault<vector<unique_ptr<Expression>>>(200, "expressions", result->expressions);
 	return std::move(result);
 }
 
