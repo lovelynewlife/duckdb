@@ -29,7 +29,7 @@ public:
 	explicit PredictionProjectionState(ExecutionContext &context, const vector<unique_ptr<Expression>> &expressions,
     const vector<LogicalType> &input_types, idx_t prediction_size = INITIAL_PREDICTION_SIZE, bool adaptive = false, idx_t buffer_capacity = DEFAULT_RESERVED_CAPACITY)
 	    : PredictionState(context, input_types, prediction_size, buffer_capacity),
-         executor(context.client, expressions, buffer_capacity), tuner(INITIAL_PREDICTION_SIZE, adaptive){
+         executor(context.client, expressions, buffer_capacity), tuner(prediction_size, adaptive){
 			output_buffer = make_uniq<DataChunk>();
             vector<LogicalType> output_types;
 
