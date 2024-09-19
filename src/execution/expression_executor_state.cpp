@@ -6,9 +6,9 @@
 
 namespace duckdb {
 
-void ExpressionState::AddChild(Expression *expr) {
+void ExpressionState::AddChild(Expression *expr, idx_t capacity) {
 	types.push_back(expr->return_type);
-	child_states.push_back(ExpressionExecutor::InitializeState(*expr, root));
+	child_states.push_back(ExpressionExecutor::InitializeState(*expr, root, capacity));
 }
 
 void ExpressionState::Finalize(bool empty, idx_t capacity) {

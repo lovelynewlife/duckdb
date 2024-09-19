@@ -12,8 +12,8 @@ namespace duckdb {
 unique_ptr<ExpressionState> ExpressionExecutor::InitializeState(const BoundComparisonExpression &expr,
                                                                 ExpressionExecutorState &root, idx_t capacity) {
 	auto result = make_uniq<ExpressionState>(expr, root);
-	result->AddChild(expr.left.get());
-	result->AddChild(expr.right.get());
+	result->AddChild(expr.left.get(), capacity);
+	result->AddChild(expr.right.get(), capacity);
 	result->Finalize(false, capacity);
 	return result;
 }

@@ -18,10 +18,10 @@ unique_ptr<ExpressionState> ExpressionExecutor::InitializeState(const BoundCaseE
                                                                 ExpressionExecutorState &root, idx_t capacity) {
 	auto result = make_uniq<CaseExpressionState>(expr, root);
 	for (auto &case_check : expr.case_checks) {
-		result->AddChild(case_check.when_expr.get());
-		result->AddChild(case_check.then_expr.get());
+		result->AddChild(case_check.when_expr.get(), capacity);
+		result->AddChild(case_check.then_expr.get(), capacity);
 	}
-	result->AddChild(expr.else_expr.get());
+	result->AddChild(expr.else_expr.get(), capacity);
 	result->Finalize(false, capacity);
 	return std::move(result);
 }

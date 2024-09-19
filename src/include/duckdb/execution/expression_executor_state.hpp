@@ -30,7 +30,7 @@ struct ExpressionState {
 	DataChunk intermediate_chunk;
 
 public:
-	void AddChild(Expression *expr);
+	void AddChild(Expression *expr, idx_t capacity = STANDARD_VECTOR_SIZE);
 	void Finalize(bool empty = false, idx_t capacity = STANDARD_VECTOR_SIZE);
 	void UpdateCapacity(idx_t capacity);
 	Allocator &GetAllocator();
