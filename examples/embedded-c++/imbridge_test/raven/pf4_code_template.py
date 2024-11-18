@@ -3,12 +3,12 @@ import numpy as np
 import pandas as pd
 import onnxruntime as ort
 
-# from threadpoolctl import threadpool_limits
-# @threadpool_limits.wrap(limits=1)
+from threadpoolctl import threadpool_limits
+@threadpool_limits.wrap(limits=1)
 def process_table(table):
     root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/test_raven"
     onnx_path = f'{root_model_path}/Flights/flights_rf_pipeline.onnx'
-    core = 16
+    core = 1
     ortconfig = ort.SessionOptions()
     ortconfig.inter_op_num_threads = core
     ortconfig.intra_op_num_threads = core

@@ -14,7 +14,7 @@ hand_type = "special"
 name = "pf1"
 
 con = duckdb.connect(
-    "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_1G.db")
+    "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_10G.db")
 
 root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/test_raven"
 scaler_path = f'{root_model_path}/Expedia/expedia_standard_scale_model.pkl'

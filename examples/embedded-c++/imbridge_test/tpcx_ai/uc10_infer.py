@@ -10,7 +10,7 @@ from tqdm import tqdm
 # hand_type = "udf"
 hand_type = "special"
 name = "uc10"
-scale = 10
+scale = 40
 
 con = duckdb.connect(
     f"/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf{scale}.db")

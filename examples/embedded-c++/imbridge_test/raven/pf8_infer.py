@@ -16,7 +16,7 @@ name = "pf8"
 
 
 con = duckdb.connect(
-    "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_1G.db")
+    "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_10G.db")
 
 root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/test_raven"
 

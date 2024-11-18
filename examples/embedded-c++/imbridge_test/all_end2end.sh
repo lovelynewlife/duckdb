@@ -37,8 +37,8 @@ echo "uc06"
 $python_exe $file_tpcx_ai_path/uc06.py
 echo "uc07"
 $python_exe $file_tpcx_ai_path/uc07.py
-echo "uc08"
-$python_exe $file_tpcx_ai_path/uc08.py
+# echo "uc08"
+# $python_exe $file_tpcx_ai_path/uc08.py
 echo "uc10"
 $python_exe $file_tpcx_ai_path/uc10.py
 
@@ -72,12 +72,12 @@ echo "uc06"
 $python_exe $file_tpcx_ai_path/uc06_infer.py
 echo "uc07"
 $python_exe $file_tpcx_ai_path/uc07_infer.py
-echo "uc08"
-$python_exe $file_tpcx_ai_path/uc08_infer.py
+# echo "uc08"
+# $python_exe $file_tpcx_ai_path/uc08_infer.py
 echo "uc10"
 $python_exe $file_tpcx_ai_path/uc10_infer.py
 
-echo "____________________________IMLane___________________________________"
+echo "____________________________IMLane(free)___________________________________"
 
 echo "pf1"
 $base_sh pf 1
@@ -103,11 +103,11 @@ echo "uc03"
 $base_sh uc 03
 echo "uc04"
 $base_sh uc 04
-echo "uc06"
-$base_sh uc 06
 echo "uc07"
 $base_sh uc 07
-echo "uc08"
-$base_sh uc 08
+# echo "uc08"
+# $base_sh uc 08
 echo "uc10"
 $base_sh uc 10
+echo "uc06"
+$base_sh uc 06

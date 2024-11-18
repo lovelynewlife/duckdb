@@ -23,7 +23,7 @@ static void udf_tmp(DataChunk &input, ExpressionState &state, Vector &result) {
 }
 
 int main() {
-	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_1G.db");
+	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_10G.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<int64_t, double, double, double, double, double, double, double, double, string_t,
 	                             string_t, int64_t, bool, int64_t, int64_t, string_t, string_t, string_t, string_t,

@@ -14,7 +14,7 @@ import time
 # hand_type = "udf"
 hand_type = "special"
 name = "uc06"
-scale = 10
+scale = 40
 
 
 con = duckdb.connect(

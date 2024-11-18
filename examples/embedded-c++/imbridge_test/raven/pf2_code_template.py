@@ -3,11 +3,15 @@ import numpy as np
 import pandas as pd
 import onnxruntime as ort
 
-
+from threadpoolctl import threadpool_limits
+@threadpool_limits.wrap(limits=1)
 def process_table(table):
     root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/test_raven"
     onnx_path = f'{root_model_path}/Expedia/expedia_dt_pipeline.onnx'
+    core = 1
     ortconfig = ort.SessionOptions()
+    ortconfig.inter_op_num_threads = core
+    ortconfig.intra_op_num_threads = core
     expedia_onnx_session = ort.InferenceSession(onnx_path, sess_options=ortconfig)
     expedia_label = expedia_onnx_session.get_outputs()[0]
     numerical_columns = ['prop_location_score1', 'prop_location_score2', 'prop_log_historical_price', 'price_usd', 'orig_destination_distance', 'prop_review_score', 'avg_bookings_usd', 'stdev_bookings_usd']

@@ -8,9 +8,10 @@ from surprise import Dataset
 from surprise.reader import Reader
 
 
-
+from threadpoolctl import threadpool_limits
+@threadpool_limits.wrap(limits=1)
 def process_table(table):
-    scale = 10
+    scale = 40
     name = "uc10"
     root_model_path = f"/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/tpcxai_datasets/sf{scale}"
     model_file_name = f"{root_model_path}/model/{name}/{name}.python.model"

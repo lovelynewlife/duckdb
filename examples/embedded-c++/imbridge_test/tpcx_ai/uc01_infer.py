@@ -14,7 +14,7 @@ os.environ['NUM_THREADS'] = '96'
 # hand_type = "udf"
 hand_type = "special"
 name = "uc01"
-scale = 10
+scale = 40
 
 
 con = duckdb.connect(

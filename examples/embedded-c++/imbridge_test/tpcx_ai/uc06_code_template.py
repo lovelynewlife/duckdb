@@ -9,9 +9,10 @@ from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
-
+from threadpoolctl import threadpool_limits
+@threadpool_limits.wrap(limits=1)
 def process_table(table):
-    scale = 10
+    scale = 40
     name = "uc06"
     root_model_path = f"/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/tpcxai_datasets/sf{scale}"
     model_file_name = f"{root_model_path}/model/{name}/{name}.python.model"

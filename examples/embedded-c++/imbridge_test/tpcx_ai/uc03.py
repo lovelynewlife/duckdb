@@ -13,7 +13,7 @@ from tqdm import tqdm
 # hand_type = "udf"
 hand_type = "special"
 name = "uc03"
-scale = 10
+scale = 40
 
 
 con = duckdb.connect(

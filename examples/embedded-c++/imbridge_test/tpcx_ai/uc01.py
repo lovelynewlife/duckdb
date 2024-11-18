@@ -12,7 +12,7 @@ from tqdm import tqdm
 # hand_type = "udf"
 hand_type = "special"
 name = "uc01"
-scale = 10
+scale = 40
 
 
 con = duckdb.connect(
@@ -28,6 +28,7 @@ model = joblib.load(model_file_name)
 
 
 def udf(return_ratio, frequency):
+    print(len(return_ratio))
     feat = pd.DataFrame({
         'return_ratio': return_ratio,
         'frequency': frequency
