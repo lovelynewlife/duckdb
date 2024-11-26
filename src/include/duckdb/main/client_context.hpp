@@ -195,6 +195,9 @@ public:
 	//! Process an error for display to the user
 	DUCKDB_API void ProcessError(ErrorData &error, const string &query) const;
 
+	//! Schedule the udf by imlane_scheduler
+	DUCKDB_API void ScheduleUDF(DataChunk &data, Vector &result);
+
 private:
 	//! Parse statements and resolve pragmas from a query
 	bool ParseStatements(ClientContextLock &lock, const string &query, vector<unique_ptr<SQLStatement>> &result,

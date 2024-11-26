@@ -24,6 +24,7 @@
 #include "duckdb/execution/index/index_type_set.hpp"
 #include "duckdb/main/database_file_opener.hpp"
 #include "duckdb/planner/collation_binding.hpp"
+#include "imlane/scheduler/scheduler.hpp"
 
 #ifndef DUCKDB_NO_THREADS
 #include "duckdb/common/thread.hpp"
@@ -65,6 +66,7 @@ DatabaseInstance::~DatabaseInstance() {
 	scheduler.reset();
 	db_manager.reset();
 	buffer_manager.reset();
+	imlane_scheduler.reset();
 	// finally, flush allocations and disable the background thread
 	if (Allocator::SupportsFlush()) {
 		Allocator::FlushAll();
@@ -225,6 +227,7 @@ void DatabaseInstance::Initialize(const char *database_path, DBConfig *user_conf
 		buffer_manager = make_uniq<StandardBufferManager>(*this, config.options.temporary_directory);
 	}
 	scheduler = make_uniq<TaskScheduler>(*this);
+	imlane_scheduler = make_uniq<imbridge::IMLaneScheduler>(true);
 	object_cache = make_uniq<ObjectCache>();
 	connection_manager = make_uniq<ConnectionManager>();
 
@@ -257,6 +260,7 @@ void DatabaseInstance::Initialize(const char *database_path, DBConfig *user_conf
 	// only increase thread count after storage init because we get races on catalog otherwise
 	scheduler->SetThreads(config.options.maximum_threads, config.options.external_threads);
 	scheduler->RelaunchThreads();
+	imlane_scheduler->launch();
 }
 
 DuckDB::DuckDB(const char *path, DBConfig *new_config) : instance(make_shared_ptr<DatabaseInstance>()) {
@@ -401,6 +405,10 @@ idx_t DatabaseInstance::NumberOfThreads() {
 
 const unordered_map<string, ExtensionInfo> &DatabaseInstance::GetExtensions() {
 	return loaded_extensions_info;
+}
+
+void DatabaseInstance::ScheduleUDF(DataChunk &data, Vector &result, const ClientProperties &options) {
+	imlane_scheduler->schedule_udf(data, result, options);
 }
 
 void DatabaseInstance::AddExtensionInfo(const string &name, const ExtensionLoadedInfo &info) {

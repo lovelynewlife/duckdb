@@ -1,5 +1,6 @@
 #include "duckdb.hpp"
 #include "duckdb/common/arrow/arrow_transform_util.hpp"
+#include "imlane/scheduler/scheduler.hpp"
 
 #include <arrow/python/pyarrow.h>
 #include <fstream>
@@ -23,19 +24,20 @@ int main(int argc, char **argv) {
 	}
 	PyGILState_STATE gstate;
 	gstate = PyGILState_Ensure();
-	
+
 	PyObject *dycacher = PyImport_ImportModule("dycacher");
-    if (!dycacher) {
-        PyErr_Print();
-    }
-	
+	if (!dycacher) {
+		PyErr_Print();
+	}
+
 	if (arrow::py::import_pyarrow()) {
 		std::cout
 		    << "[Server] import pyarrow error! make sure your default python environment has installed the pyarrow\n";
 		exit(0);
 	}
 
-	imbridge::SharedMemoryManager shm_server(channel_name, imbridge::ProcessKind::SERVER);
+	imbridge::IMLaneScheduler scheduler;
+	imbridge::SharedMemoryManager shm_server(channel_name, imbridge::ProcessKind::MANAGER);
 
 	// prepare the environment
 	std::ifstream file("/root/workspace/duckdb/examples/embedded-c++/imbridge/code.py");
@@ -47,34 +49,51 @@ int main(int argc, char **argv) {
 	PyObject *main_dict = PyModule_GetDict(main_module);
 	PyObject *MyProcess = PyDict_GetItemString(main_dict, "MyProcess");
 	PyObject *my_process_instance = PyObject_CallObject(MyProcess, NULL);
-	if(my_process_instance == NULL) {
+	if (my_process_instance == NULL) {
 		PyErr_Print();
 		return 0;
 	}
-
+	// std::cout << "[Server] prepare the environment   " << channel_name << std::endl;
 	while (true) {
-		shm_server.sem_server->wait();
-		if (!shm_server.is_alive()) {
+		try {
+			scheduler.wait_task_queue();
+			if (!scheduler.is_alive()) {
+				break;
+			}
+		} catch (const std::exception &e) {
+			std::cout<<"[Server exit]" << e.what() << std::endl;
 			break;
 		}
-		std::shared_ptr<arrow::Table> my_table = imbridge::ReadArrowTableFromSharedMemory(shm_server, INPUT_TABLE);
+		// std::cout << "[Server] get ID\n";
+		int id = scheduler.get_id_from_task_queue();
 
+		imbridge::SharedMemoryManager shm(std::to_string(id), imbridge::ProcessKind::SERVER);
+
+		// read table
+		std::shared_ptr<arrow::Table> my_table = imbridge::ReadArrowTableFromSharedMemory(shm, INPUT_TABLE);
+
+		// handle table and predict
 		PyObject *py_table_tmp = arrow::py::wrap_table(std::move(my_table));
 		PyObject *py_result = PyObject_CallMethod(my_process_instance, "process", "O", py_table_tmp);
 
+		// get the result
 		if (py_result != NULL) {
 			my_table = arrow::py::unwrap_table(py_result).ValueOrDie();
-		}else{
+		} else {
 			PyErr_Print();
 			return 0;
 		}
-
-		imbridge::WriteArrowTableToSharedMemory(my_table, shm_server, OUTPUT_TABLE);
-		shm_server.sem_client->post();
+		// std::cout << "[Server] handle finished\n";
+		// write result to shared memory
+		imbridge::WriteArrowTableToSharedMemory(my_table, shm, OUTPUT_TABLE);
+		shm.sem_client->post();
+		// TODO: update the avaliable queue
+		shm.sem_server->wait();
+		// std::cout << "[Server] end\n";
+		scheduler.push_id_to_avaliable_queue(id);
 	}
 	// std::cout << "[Server] udf server " << channel_name << " closed\n";
-	shm_server.sem_client->post();
 	PyGILState_Release(gstate);
-    Py_Finalize();
+	Py_Finalize();
 	return 0;
 }
