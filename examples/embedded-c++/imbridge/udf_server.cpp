@@ -64,9 +64,9 @@ int main(int argc, char **argv) {
 			std::cout<<"[Server exit]" << e.what() << std::endl;
 			break;
 		}
-		// std::cout << "[Server] get ID\n";
+		
 		int id = scheduler.get_id_from_task_queue();
-
+		// std::cout << "[Server] get ID : " << id << std::endl;
 		imbridge::SharedMemoryManager shm(std::to_string(id), imbridge::ProcessKind::SERVER);
 
 		// read table
@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
 		shm.sem_client->post();
 		// TODO: update the avaliable queue
 		shm.sem_server->wait();
-		// std::cout << "[Server] end\n";
+		// std::cout << "[Server] end id : " << id << std::endl;
 		scheduler.push_id_to_avaliable_queue(id);
 	}
 	// std::cout << "[Server] udf server " << channel_name << " closed\n";
