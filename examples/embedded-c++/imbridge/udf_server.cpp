@@ -53,10 +53,12 @@ int main(int argc, char **argv) {
 		PyErr_Print();
 		return 0;
 	}
+	scheduler.push_id_to_avaliable_queue(std::atoi(channel_name.c_str()));
 	// std::cout << "[Server] prepare the environment   " << channel_name << std::endl;
 	while (true) {
+		int id;
 		try {
-			scheduler.wait_task_queue();
+			id = scheduler.get_id_from_task_queue();
 			if (!scheduler.is_alive()) {
 				break;
 			}
@@ -65,8 +67,8 @@ int main(int argc, char **argv) {
 			break;
 		}
 		
-		int id = scheduler.get_id_from_task_queue();
-		// std::cout << "[Server] get ID : " << id << std::endl;
+		
+		// std::cout << "[Server] get ID : " << id << "    channel : "<< channel_name << std::endl;
 		imbridge::SharedMemoryManager shm(std::to_string(id), imbridge::ProcessKind::SERVER);
 
 		// read table
