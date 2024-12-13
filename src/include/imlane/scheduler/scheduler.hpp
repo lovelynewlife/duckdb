@@ -37,13 +37,13 @@ const int BASE_ID = 100000;
 
 class IMLaneScheduler {
 public:
-	IMLaneScheduler(bool is_manager = false, const size_t size = 1024 * 1024)
+	IMLaneScheduler(bool is_manager = false, int sys_core=0, const size_t size = 1024 * 1024)
 	    : is_manager(is_manager), task_queue(bi::open_or_create, TASK_QUEUE_NAME.c_str(), 300, sizeof(int)),
 	      avaliable_queue(bi::open_or_create, AVALIABLE_QUEUE_NAME.c_str(), 300, sizeof(int)) {
 		global_segment = bi::managed_shared_memory(bi::open_or_create, GLOBAL_SHM_NAME.c_str(), size);
 		alive = global_segment.find_or_construct<bool>(SCHEDULER_ALIVE.c_str())(true);
 		if (is_manager) {
-			sys_cpu_core_nums = std::thread::hardware_concurrency();
+			sys_cpu_core_nums = sys_core;
 		}
 	}
 

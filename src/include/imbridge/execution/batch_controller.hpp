@@ -31,6 +31,8 @@ public:
     void ExternalProjectionReset(ClientContext &context, DataChunk &input, ExpressionExecutor &executor);
     // helper method for batch adpater, keep the output batch size <= STANDARD_VECTOR_SIZE
     void BatchAdapting(DataChunk &input, DataChunk &output, idx_t start_offset, idx_t size=STANDARD_VECTOR_SIZE);
+    // async execute expression
+    unique_ptr<DataChunk> AsyncExecuteExpression(ClientContext &context, ExpressionExecutor &executor, unique_ptr<DataChunk> input, vector<LogicalType> return_types, idx_t buffer_size = STANDARD_VECTOR_SIZE);
 
 private:
     void InternalVecShift(Vector &vec, data_ptr_t data_view, idx_t offset);

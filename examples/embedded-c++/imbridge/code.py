@@ -1,40 +1,50 @@
-import pandas as pd
+import joblib
 import pyarrow as pa
-import pickle
 import numpy as np
-
-from sklearn.preprocessing import OneHotEncoder
+import pandas as pd
+from imblearn.over_sampling import ADASYN
+from imblearn.pipeline import Pipeline as Imb_Pipeline
+from sklearn import metrics
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+
 from threadpoolctl import threadpool_limits
 @threadpool_limits.wrap(limits=1)
 def process_table(table):
-    root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/test_raven"
-    scaler_path = f'{root_model_path}/Flights/flights_standard_scale_model.pkl'
-    enc_path = f'{root_model_path}/Flights/flights_one_hot_encoder.pkl'
-    model_path = f'{root_model_path}/Flights/flights_rf_model.pkl'
-    with open(scaler_path, 'rb') as f:
-        scaler = pickle.load(f)
-    with open(enc_path, 'rb') as f:
-        enc = pickle.load(f)
-    with open(model_path, 'rb') as f:
-        model = pickle.load(f)
-    data = table.to_pandas().values
-    data = np.split(data, np.array([4]), axis=1)
-    numerical = data[0]
-    categorical = data[1]
-
-    X = np.hstack((scaler.transform(numerical),
-                  enc.transform(categorical).toarray()))
-    res = model.predict(X)
-    df = pd.DataFrame(res)
-    return pa.Table.from_pandas(df)
+    scale = 10
+    name = "uc06"
+    root_model_path = f"/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/tpcxai_datasets/sf{scale}"
+    model_file_name = f"{root_model_path}/model/{name}/{name}.python.model"
+    model = joblib.load(model_file_name)
+    def udf(smart_5_raw,
+            smart_10_raw,
+            smart_184_raw,
+            smart_187_raw,
+            smart_188_raw,
+            smart_197_raw,
+            smart_198_raw):
+        data = pd.DataFrame({
+            'smart_5_raw': smart_5_raw,
+            'smart_10_raw': smart_10_raw,
+            'smart_184_raw': smart_184_raw,
+            'smart_187_raw': smart_187_raw,
+            'smart_188_raw': smart_188_raw,
+            'smart_197_raw': smart_197_raw,
+            'smart_198_raw': smart_198_raw
+        })
+        # print(data)
+        # print(data.shape)
+        return model.predict(data)
     
+    df = pd.DataFrame(udf(*table))
+    # print(df)
+    return pa.Table.from_pandas(df)
 
 class MyProcess:
     def __init__(self):
         # load model part
         pass
-
 
     def process(self, table):
         # print(table.num_rows)

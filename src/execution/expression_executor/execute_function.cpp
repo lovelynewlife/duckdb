@@ -77,11 +77,11 @@ void ExpressionExecutor::Execute(const BoundFunctionExpression &expr, Expression
 	arguments.Verify();
 
 	D_ASSERT(expr.function.function);
-	if (expr.function.bridge_info && expr.function.bridge_info->kind == FunctionKind::PREDICTION) {
-		context->ScheduleUDF(arguments, result);
-	} else {
-		expr.function.function(arguments, *state, result);
-	}
+	// if (expr.function.bridge_info && expr.function.bridge_info->kind == FunctionKind::PREDICTION) {
+	context->ScheduleUDF(arguments, result);
+	// } else {
+	// 	expr.function.function(arguments, *state, result);
+	// }
 	VerifyNullHandling(expr, arguments, result);
 	D_ASSERT(result.GetType() == expr.return_type);
 }

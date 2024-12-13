@@ -227,7 +227,7 @@ void DatabaseInstance::Initialize(const char *database_path, DBConfig *user_conf
 		buffer_manager = make_uniq<StandardBufferManager>(*this, config.options.temporary_directory);
 	}
 	scheduler = make_uniq<TaskScheduler>(*this);
-	imlane_scheduler = make_uniq<imbridge::IMLaneScheduler>(true);
+	imlane_scheduler = make_uniq<imbridge::IMLaneScheduler>(true, std::max(1, (int)config.options.maximum_threads));
 	object_cache = make_uniq<ObjectCache>();
 	connection_manager = make_uniq<ConnectionManager>();
 

@@ -36,7 +36,7 @@ public:
 	Allocator &GetAllocator();
 	bool HasContext();
 	DUCKDB_API ClientContext &GetContext();
-
+	unique_ptr<ExpressionState> CopyState();
 	void Verify(ExpressionExecutorState &root);
 
 public:

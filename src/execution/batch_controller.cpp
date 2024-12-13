@@ -282,6 +282,14 @@ namespace imbridge {
         InternalSlicing(input, output, start_offset, stop_offset);
     }
 
+    unique_ptr<DataChunk> BatchController::AsyncExecuteExpression(ClientContext &context, ExpressionExecutor &executor, unique_ptr<DataChunk> input, vector<LogicalType> return_types, idx_t buffer_size){
+        unique_ptr<DataChunk> out_buffer = make_uniq<DataChunk>();
+        out_buffer->Initialize(Allocator::Get(context), return_types, buffer_size);
+        unique_ptr<ExpressionExecutor> new_executor = executor.Copy();
+        new_executor->Execute(*input, *out_buffer);
+        return out_buffer;
+    }
+
 } // namespace imbridge
 
 } // namespace duckdb

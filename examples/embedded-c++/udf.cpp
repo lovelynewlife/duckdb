@@ -3,10 +3,8 @@
 
 #include <chrono>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <thread>
-#include <iostream>
 
 using namespace duckdb;
 using namespace imbridge;
@@ -18,41 +16,34 @@ static void udf_tmp(DataChunk &input, ExpressionState &state, Vector &result) {
 	input.Flatten();
 	auto tmp_data1 = ConstantVector::GetData<TYPE>(input.data[0]);
 	auto tmp_data2 = ConstantVector::GetData<TYPE>(input.data[1]);
-	memset(result_data, std::numeric_limits<TYPE>::min(), input.size() * sizeof(TYPE));
+	memset(result_data, std::numeric_limits<int64_t>::min(), input.size() * sizeof(int64_t));
 	for (idx_t i = 0; i < input.size(); i++) {
-		result_data[i] = 1 * tmp_data1[i] + 1 * tmp_data2[i];
+		result_data[i] = (int)tmp_data1[i];
 	}
 }
 
 int main() {
-	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_raven_10G.db");
+	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf10.db");
 	Connection con(db);
-	con.CreateVectorizedFunction<int64_t, double, double, double, double, int64_t, string_t, string_t, string_t,
-	                             string_t, string_t, string_t, int64_t, string_t, string_t, string_t, int64_t,
-	                             string_t>("udf", &udf_tmp, LogicalType::INVALID, FunctionKind::PREDICTION, 4096);
+	con.CreateVectorizedFunction<int64_t, double, double, double, double, double, double, double>(
+	    "udf", &udf_tmp, LogicalType::INVALID, FunctionKind::COMMON, 4096);
+
 	string sql = R"(
-	SELECT Flights_S_routes_extension.airlineid, Flights_S_routes_extension.sairportid,
-	Flights_S_routes_extension.dairportid,
-	                        udf(slatitude, slongitude, dlatitude, dlongitude, name1, name2, name4, acountry, active,
-	                        scity, scountry, stimezone, sdst, dcity, dcountry, dtimezone, ddst) AS codeshare
-	                        FROM Flights_S_routes_extension JOIN Flights_R1_airlines ON
-	                        Flights_S_routes_extension.airlineid = Flights_R1_airlines.airlineid JOIN
-	                        Flights_R2_sairports ON Flights_S_routes_extension.sairportid =
-	                        Flights_R2_sairports.sairportid JOIN Flights_R3_dairports ON
-	                        Flights_S_routes_extension.dairportid = Flights_R3_dairports.dairportid
-	where slatitude > 26 and dlatitude > 30 and slatitude < 40 and dlatitude < 40
-	)";
+select serial_number, udf(smart_5_raw, smart_10_raw, smart_184_raw, smart_187_raw, smart_188_raw, smart_197_raw, smart_198_raw) 
+from Failures;
+)";
 	int times = 1;
 	double result = 0;
 	double min1, max1;
 	bool flag = true;
 	for (int i = 0; i < times; i++) {
+		printf("step times %d \n", i);
 		auto start_time = std::chrono::high_resolution_clock::now();
-		std::cout<<con.Query(sql)->ToString()<<std::endl;
+		con.Query(sql)->Print();
 		auto end_time = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 		double t = duration / 1e6;
-		printf("%d : %lf\n", i + 1, t);
+		printf("%d : %lf\n", i+1, t);
 		result += t;
 		if (flag) {
 			flag = false;
