@@ -27,8 +27,9 @@
 #include "duckdb/main/settings.hpp"
 #include "duckdb/main/stream_query_result.hpp"
 #include "duckdb/main/table_description.hpp"
-#include "duckdb/transaction/transaction_context.hpp"
 #include "duckdb/planner/expression/bound_parameter_data.hpp"
+#include "duckdb/transaction/transaction_context.hpp"
+#include <atomic>
 
 namespace duckdb {
 class Appender;
@@ -85,6 +86,10 @@ public:
 	unique_ptr<ClientData> client_data;
 	//! Data for the currently running transaction
 	TransactionContext transaction;
+	//! number of async tasks in process
+	std::atomic<idx_t> num_of_async_tasks;
+	//! upbound of the async tasks
+	idx_t upbound = 1024;
 
 public:
 	MetaTransaction &ActiveTransaction() {

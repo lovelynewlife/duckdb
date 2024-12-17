@@ -23,7 +23,8 @@ void PredictionFuncChecker::VisitExpression(unique_ptr<Expression> *expression, 
     if(expr.GetExpressionClass() == ExpressionClass::BOUND_FUNCTION) {
         auto &func_expr = expr.Cast<BoundFunctionExpression>();
         if(func_expr.function.bridge_info) {
-            if(func_expr.function.bridge_info->kind == FunctionKind::PREDICTION) {
+            if(func_expr.function.bridge_info->kind == FunctionKind::PREDICTION || func_expr.function.bridge_info->kind == FunctionKind::ASYNC_PREDICTION) {
+                kind = func_expr.function.bridge_info->kind;
                 total_prediction_func_count += 1;
                 user_batch_size_map[root_idx] = std::max(idx_t(func_expr.function.bridge_info->batch_size), user_batch_size_map[root_idx]);
                 root_idx_list.insert(root_idx);

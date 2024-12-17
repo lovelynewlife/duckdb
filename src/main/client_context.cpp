@@ -136,7 +136,7 @@ struct DebugClientContextState : public ClientContextState {
 #endif
 
 ClientContext::ClientContext(shared_ptr<DatabaseInstance> database)
-    : db(std::move(database)), interrupted(false), client_data(make_uniq<ClientData>(*this)), transaction(*this) {
+    : db(std::move(database)), interrupted(false), client_data(make_uniq<ClientData>(*this)), transaction(*this), num_of_async_tasks(0){
 #ifdef DEBUG
 	registered_state["debug_client_context_state"] = make_uniq<DebugClientContextState>();
 #endif
