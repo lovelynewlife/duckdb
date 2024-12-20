@@ -162,16 +162,15 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
 		auto &res_collect = state.res_collect;
 		for (auto it = res_collect.begin(); it != res_collect.end(); ++it) {
 			if (it->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-				unique_ptr<DataChunk> out_buffer = it->get();
-				vector<int64_t> check;
-				out_buffer->Copy(chunk);
-				auto tmp_data1 = ConstantVector::GetData<int64_t>(chunk.data[1]);
-				for (auto i = 0; i < out_buffer->size(); ++i) {
-					check.push_back(tmp_data1[i]);
+				try {
+					unique_ptr<DataChunk> out_buffer = it->get();
+					out_buffer->Copy(chunk);
+					res_collect.erase(it);
+					context.client.num_of_async_tasks--;
+					return OperatorResultType::HAVE_MORE_OUTPUT;
+				} catch (const std::exception &e) {
+					throw InternalException(e.what());
 				}
-				res_collect.erase(it);
-				context.client.num_of_async_tasks--;
-				return OperatorResultType::HAVE_MORE_OUTPUT;
 			}
 		}
 
@@ -261,11 +260,15 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
 
 		for (auto it = res_collect.begin(); it != res_collect.end(); ++it) {
 			if (it->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-				unique_ptr<DataChunk> out_buffer = it->get();
-				out_buffer->Copy(chunk);
-				res_collect.erase(it);
-				context.client.num_of_async_tasks--;
-				return OperatorFinalizeResultType::HAVE_MORE_OUTPUT;
+				try {
+					unique_ptr<DataChunk> out_buffer = it->get();
+					out_buffer->Copy(chunk);
+					res_collect.erase(it);
+					context.client.num_of_async_tasks--;
+					return OperatorFinalizeResultType::HAVE_MORE_OUTPUT;
+				} catch (const std::exception &e) {
+					throw InternalException(e.what());
+				}
 			}
 		}
 		if (res_collect.empty()) {
@@ -273,9 +276,9 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
 		} else {
 			return OperatorFinalizeResultType::HAVE_MORE_OUTPUT;
 		}
-	}else{
-        throw InternalException("Unsupported Prediction Function Kind");
-    }
+	} else {
+		throw InternalException("Unsupported Prediction Function Kind");
+	}
 }
 
 } // namespace imbridge

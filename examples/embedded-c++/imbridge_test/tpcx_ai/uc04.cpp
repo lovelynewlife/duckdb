@@ -25,7 +25,7 @@ static void udf_tmp(DataChunk &input, ExpressionState &state, Vector &result) {
 int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
-	con.CreateVectorizedFunction<int64_t, string_t>("udf", &udf_tmp, LogicalType::INVALID, FunctionKind::PREDICTION,
+	con.CreateVectorizedFunction<int64_t, string_t>("udf", &udf_tmp, LogicalType::INVALID, FunctionKind::ASYNC_PREDICTION,
 	                                                4096);
 
 	string sql = R"(

@@ -26,7 +26,7 @@ int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<double, int64_t, int64_t>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                      FunctionKind::PREDICTION, 4096);
+	                                                      FunctionKind::ASYNC_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze select userID, productID, r, score  from (select userID, productID, score, rank() OVER (PARTITION BY userID ORDER BY score) as r  from (select userID, productID, udf(userID, productID) score  from (select userID, productID  from Product_Rating group by userID, productID))) where r <=10;
@@ -37,7 +37,7 @@ explain analyze select userID, productID, r, score  from (select userID, product
 	bool flag = true;
 	for (int i = 0; i < times; i++) {
 		auto start_time = std::chrono::high_resolution_clock::now();
-		con.Query(sql);
+		con.Query(sql)->Print();
 		auto end_time = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 		double t = duration / 1e6;

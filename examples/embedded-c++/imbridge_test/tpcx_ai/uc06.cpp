@@ -26,7 +26,7 @@ int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<int64_t, double, double, double, double, double, double, double>(
-	    "udf", &udf_tmp, LogicalType::INVALID, FunctionKind::PREDICTION, 4096);
+	    "udf", &udf_tmp, LogicalType::INVALID, FunctionKind::ASYNC_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze select serial_number, udf(smart_5_raw, smart_10_raw, smart_184_raw, smart_187_raw, smart_188_raw, smart_197_raw, smart_198_raw) 

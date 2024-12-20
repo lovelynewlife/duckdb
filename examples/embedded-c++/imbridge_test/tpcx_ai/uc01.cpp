@@ -26,7 +26,7 @@ int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<int64_t, double, double>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                      FunctionKind::PREDICTION, 4096);
+	                                                      FunctionKind::ASYNC_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze select ratio_tbl.o_customer_sk, udf(COALESCE(return_ratio,0), COALESCE(frequency,0))

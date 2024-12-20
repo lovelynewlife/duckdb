@@ -28,7 +28,7 @@ int main() {
 	con.CreateVectorizedFunction<int64_t, double, double, double, double, double, double, double, int64_t, double,
 	                             int64_t, string_t, string_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t,
 	                             int64_t, int64_t, int64_t, int64_t, int64_t>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                                          FunctionKind::PREDICTION, 4096);
+	                                                                          FunctionKind::ASYNC_PREDICTION, 4096);
 
 	string sql = R"(
 Explain analyze SELECT eid, udf(hematocrit, neutrophils, sodium, glucose, bloodureanitro, creatinine, bmi, pulse,

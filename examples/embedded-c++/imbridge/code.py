@@ -1,44 +1,31 @@
 import joblib
-import pyarrow as pa
 import numpy as np
+import pyarrow as pa
 import pandas as pd
-from imblearn.over_sampling import ADASYN
-from imblearn.pipeline import Pipeline as Imb_Pipeline
-from sklearn import metrics
-from sklearn.metrics import classification_report, confusion_matrix, f1_score
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+import joblib
+from surprise import SVD
+from surprise import Dataset
+from surprise.reader import Reader
+
 
 from threadpoolctl import threadpool_limits
 @threadpool_limits.wrap(limits=1)
 def process_table(table):
-    scale = 10
-    name = "uc06"
+    scale = 40
+    name = "uc10"
     root_model_path = f"/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/tpcxai_datasets/sf{scale}"
     model_file_name = f"{root_model_path}/model/{name}/{name}.python.model"
     model = joblib.load(model_file_name)
-    def udf(smart_5_raw,
-            smart_10_raw,
-            smart_184_raw,
-            smart_187_raw,
-            smart_188_raw,
-            smart_197_raw,
-            smart_198_raw):
+
+    def udf(business_hour_norm, amount_norm):
         data = pd.DataFrame({
-            'smart_5_raw': smart_5_raw,
-            'smart_10_raw': smart_10_raw,
-            'smart_184_raw': smart_184_raw,
-            'smart_187_raw': smart_187_raw,
-            'smart_188_raw': smart_188_raw,
-            'smart_197_raw': smart_197_raw,
-            'smart_198_raw': smart_198_raw
+            'business_hour_norm': business_hour_norm,
+            'amount_norm': amount_norm
         })
-        # print(data)
         # print(data.shape)
         return model.predict(data)
-    
     df = pd.DataFrame(udf(*table))
-    # print(df)
+    # print(len(df))
     return pa.Table.from_pandas(df)
 
 class MyProcess:
