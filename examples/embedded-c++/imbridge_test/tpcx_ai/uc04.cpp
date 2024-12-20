@@ -29,7 +29,7 @@ int main() {
 	                                                4096);
 
 	string sql = R"(
- select udf(txt) from 
+explain analyze  select udf(txt) from 
 (select DISTINCT text txt from Review);
 )";
 	int times = 5;
