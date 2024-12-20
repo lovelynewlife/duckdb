@@ -45,7 +45,7 @@ Explain analyze SELECT Time, Amount, udf(V1, V2, V3, V4, V5, V6, V7, V8, V9, V10
 		auto end_time = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 		double t = duration / 1e6;
-		printf("%d : %lf\n", i+1, t);
+		printf("%d : %lf\n", i + 1, t);
 		result += t;
 		if (flag) {
 			flag = false;
@@ -55,6 +55,7 @@ Explain analyze SELECT Time, Amount, udf(V1, V2, V3, V4, V5, V6, V7, V8, V9, V10
 			min1 = std::min(min1, t);
 			max1 = std::max(max1, t);
 		}
+		con.IMLaneResetCache();
 	}
 	printf("min : %lf\n", min1);
 	printf("max : %lf\n", max1);

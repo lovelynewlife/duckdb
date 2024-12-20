@@ -62,6 +62,7 @@ int main() {
 			min1 = std::min(min1, t);
 			max1 = std::max(max1, t);
 		}
+		con.IMLaneResetCache();
 	}
 	printf("min : %lf\n", min1);
 	printf("max : %lf\n", max1);

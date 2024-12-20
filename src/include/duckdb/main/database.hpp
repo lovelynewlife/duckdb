@@ -77,6 +77,8 @@ public:
 
 	void ScheduleUDF(DataChunk &data, Vector &result, const ClientProperties &options);
 
+	DUCKDB_API void IMLaneResetCache();
+
 private:
 	void Initialize(const char *path, DBConfig *config);
 	void CreateMainDatabase();

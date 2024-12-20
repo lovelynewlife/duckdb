@@ -25,8 +25,8 @@ static void udf_tmp(DataChunk &input, ExpressionState &state, Vector &result) {
 int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
-	con.CreateVectorizedFunction<int64_t, string_t>("udf", &udf_tmp, LogicalType::INVALID, FunctionKind::ASYNC_PREDICTION,
-	                                                4096);
+	con.CreateVectorizedFunction<int64_t, string_t>("udf", &udf_tmp, LogicalType::INVALID,
+	                                                FunctionKind::ASYNC_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze  select udf(txt) from 
@@ -42,7 +42,7 @@ explain analyze  select udf(txt) from
 		auto end_time = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 		double t = duration / 1e6;
-		printf("%d : %lf\n", i+1, t);
+		printf("%d : %lf\n", i + 1, t);
 		result += t;
 		if (flag) {
 			flag = false;
@@ -52,6 +52,7 @@ explain analyze  select udf(txt) from
 			min1 = std::min(min1, t);
 			max1 = std::max(max1, t);
 		}
+		con.IMLaneResetCache();
 	}
 	printf("min : %lf\n", min1);
 	printf("max : %lf\n", max1);

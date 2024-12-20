@@ -26,7 +26,7 @@ int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<double, int64_t, int64_t>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                      FunctionKind::ASYNC_PREDICTION, 4096);
+	                                                       FunctionKind::ASYNC_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze select userID, productID, r, score  from (select userID, productID, score, rank() OVER (PARTITION BY userID ORDER BY score) as r  from (select userID, productID, udf(userID, productID) score  from (select userID, productID  from Product_Rating group by userID, productID))) where r <=10;
@@ -41,7 +41,7 @@ explain analyze select userID, productID, r, score  from (select userID, product
 		auto end_time = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 		double t = duration / 1e6;
-		printf("%d : %lf\n", i+1, t);
+		printf("%d : %lf\n", i + 1, t);
 		result += t;
 		if (flag) {
 			flag = false;
@@ -51,6 +51,7 @@ explain analyze select userID, productID, r, score  from (select userID, product
 			min1 = std::min(min1, t);
 			max1 = std::max(max1, t);
 		}
+		con.IMLaneResetCache();
 	}
 	printf("min : %lf\n", min1);
 	printf("max : %lf\n", max1);

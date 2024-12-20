@@ -179,6 +179,11 @@ void ClientContext::ScheduleUDF(DataChunk &data, Vector &result) {
 	db_inst.ScheduleUDF(data, result, GetClientProperties());
 }
 
+void ClientContext::IMLaneResetCache() {
+	auto &db_inst = DatabaseInstance::GetDatabase(*this);
+	db_inst.IMLaneResetCache();
+}
+
 template <class T>
 unique_ptr<T> ClientContext::ErrorResult(ErrorData error, const string &query) {
 	ProcessError(error, query);

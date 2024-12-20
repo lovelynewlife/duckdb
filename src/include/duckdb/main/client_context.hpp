@@ -29,6 +29,7 @@
 #include "duckdb/main/table_description.hpp"
 #include "duckdb/planner/expression/bound_parameter_data.hpp"
 #include "duckdb/transaction/transaction_context.hpp"
+
 #include <atomic>
 
 namespace duckdb {
@@ -202,6 +203,9 @@ public:
 
 	//! Schedule the udf by imlane_scheduler
 	DUCKDB_API void ScheduleUDF(DataChunk &data, Vector &result);
+
+	//! Reset Dycacher Cache
+	DUCKDB_API void IMLaneResetCache();
 
 private:
 	//! Parse statements and resolve pragmas from a query

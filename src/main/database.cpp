@@ -411,6 +411,10 @@ void DatabaseInstance::ScheduleUDF(DataChunk &data, Vector &result, const Client
 	imlane_scheduler->schedule_udf(data, result, options);
 }
 
+void DatabaseInstance::IMLaneResetCache() {
+	imlane_scheduler->reset_cache();
+}
+
 void DatabaseInstance::AddExtensionInfo(const string &name, const ExtensionLoadedInfo &info) {
 	loaded_extensions_info[name].load_info = make_uniq<ExtensionLoadedInfo>(info);
 }

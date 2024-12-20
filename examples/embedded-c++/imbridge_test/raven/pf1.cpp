@@ -52,7 +52,7 @@ and srch_booking_window > 10 and srch_length_of_stay > 1;
 		auto end_time = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 		double t = duration / 1e6;
-		printf("%d : %lf\n", i+1, t);
+		printf("%d : %lf\n", i + 1, t);
 		result += t;
 		if (flag) {
 			flag = false;
@@ -62,6 +62,7 @@ and srch_booking_window > 10 and srch_length_of_stay > 1;
 			min1 = std::min(min1, t);
 			max1 = std::max(max1, t);
 		}
+		con.IMLaneResetCache();
 	}
 	printf("min : %lf\n", min1);
 	printf("max : %lf\n", max1);
