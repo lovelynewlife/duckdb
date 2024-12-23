@@ -73,7 +73,7 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
                                                          GlobalOperatorState &gstate, OperatorState &state_p) const {
 	auto &state = state_p.Cast<PredictionProjectionState>();
 	auto &controller = state.controller;
-	if (kind == FunctionKind::PREDICTION) {
+	if (kind == FunctionKind::BATCH_PREDICTION) {
 		auto &out_buf = state.output_buffer;
 		auto &padded = state.padded;
 		auto &output_left = state.output_left;
@@ -187,6 +187,9 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
 			return OperatorResultType::NEED_MORE_INPUT;
 		}
 		return OperatorResultType::HAVE_MORE_OUTPUT;
+	} else if (kind == FunctionKind::SCHEDULE_PREDICTION) {
+		state.executor.Execute(input, chunk);
+		return OperatorResultType::NEED_MORE_INPUT;
 	} else {
 		throw InternalException("Unsupported Prediction Function Kind");
 	}
@@ -214,7 +217,7 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
                                                                       GlobalOperatorState &gstate,
                                                                       OperatorState &state) const {
 	auto &local = state.Cast<PredictionProjectionState>();
-	if (kind == FunctionKind::PREDICTION) {
+	if (kind == FunctionKind::BATCH_PREDICTION) {
 		auto &controller = local.controller;
 
 		auto &out_buf = local.output_buffer;
@@ -276,6 +279,8 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
 		} else {
 			return OperatorFinalizeResultType::HAVE_MORE_OUTPUT;
 		}
+	} else if (kind == FunctionKind::SCHEDULE_PREDICTION) {
+		return OperatorFinalizeResultType::FINISHED;
 	} else {
 		throw InternalException("Unsupported Prediction Function Kind");
 	}

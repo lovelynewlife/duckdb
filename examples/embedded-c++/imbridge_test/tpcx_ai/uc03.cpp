@@ -26,7 +26,7 @@ int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<string_t, int64_t, string_t>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                      FunctionKind::PREDICTION, 4096);
+	                                                      FunctionKind::BATCH_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze  select store, department, udf(store, department) 

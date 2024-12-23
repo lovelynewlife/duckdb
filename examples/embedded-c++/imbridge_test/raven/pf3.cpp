@@ -28,7 +28,7 @@ int main() {
 	Connection con(db);
 	con.CreateVectorizedFunction<int64_t, double, double, double, double, int64_t, string_t, string_t, string_t,
 	                             string_t, string_t, string_t, int64_t, string_t, string_t, string_t, int64_t,
-	                             string_t>("udf", &udf_tmp, LogicalType::INVALID, FunctionKind::ASYNC_PREDICTION, 4096);
+	                             string_t>("udf", &udf_tmp, LogicalType::INVALID, FunctionKind::SCHEDULE_PREDICTION, 4096);
 
 	string sql = R"(
 	Explain analyze SELECT Flights_S_routes_extension.airlineid, Flights_S_routes_extension.sairportid,

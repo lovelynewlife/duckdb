@@ -33,7 +33,7 @@ int main() {
 	    int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t,
 	    int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t,
 	    int64_t, int64_t, int64_t, int64_t, int64_t, int64_t>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                          FunctionKind::PREDICTION, 4096);
+	                                                          FunctionKind::BATCH_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze select o_order_id, udf(cast(scan_count as INTEGER), cast(scan_count_abs as INTEGER), 

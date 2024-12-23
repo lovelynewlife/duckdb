@@ -30,7 +30,7 @@ void bs_process(Connection &con, int dbt, int mlt, int max_bs = 6200, int now_bs
 		std::string udf_name = ss.str();
 		con.CreateVectorizedFunction<int64_t, double, double, double, double, int64_t, string_t, string_t, string_t,
 	                             string_t, string_t, string_t, int64_t, string_t, string_t, string_t, int64_t,
-	                             string_t>(udf_name, &udf_tmp, LogicalType::INVALID, FunctionKind::PREDICTION, 4096);
+	                             string_t>(udf_name, &udf_tmp, LogicalType::INVALID, FunctionKind::BATCH_PREDICTION, 4096);
 
 		ss.str("");
 		ss.clear();

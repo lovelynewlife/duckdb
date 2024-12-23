@@ -1,6 +1,7 @@
 #include "duckdb/common/arrow/arrow_transform_util.hpp"
 #include "duckdb/execution/expression_executor.hpp"
 #include "duckdb/planner/expression/bound_function_expression.hpp"
+
 #include <iostream>
 
 namespace duckdb {
@@ -77,8 +78,9 @@ void ExpressionExecutor::Execute(const BoundFunctionExpression &expr, Expression
 	arguments.Verify();
 
 	D_ASSERT(expr.function.function);
-	if (expr.function.bridge_info && (expr.function.bridge_info->kind == FunctionKind::PREDICTION ||
-	                                  expr.function.bridge_info->kind == FunctionKind::ASYNC_PREDICTION)) {
+	if (expr.function.bridge_info && (expr.function.bridge_info->kind == FunctionKind::BATCH_PREDICTION ||
+	                                  expr.function.bridge_info->kind == FunctionKind::ASYNC_PREDICTION ||
+	                                  expr.function.bridge_info->kind == FunctionKind::SCHEDULE_PREDICTION)) {
 		context->ScheduleUDF(arguments, result);
 	} else {
 		expr.function.function(arguments, *state, result);

@@ -14,7 +14,7 @@ public:
 public:
 	PhysicalPredictionProjection(vector<LogicalType> types, vector<unique_ptr<Expression>> select_list,
 	                             idx_t estimated_cardinality, idx_t user_defined_size = INITIAL_PREDICTION_SIZE,
-	                             FunctionKind kind = FunctionKind::PREDICTION);
+	                             FunctionKind kind = FunctionKind::BATCH_PREDICTION);
 
 	vector<unique_ptr<Expression>> select_list;
 	idx_t user_defined_size;

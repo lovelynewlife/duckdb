@@ -26,7 +26,7 @@ int main() {
 	DuckDB db("/root/workspace/duckdb/examples/embedded-c++/imbridge_test/db/db_tpcx_ai_sf40.db");
 	Connection con(db);
 	con.CreateVectorizedFunction<int64_t, double, double>("udf", &udf_tmp, LogicalType::INVALID,
-	                                                      FunctionKind::ASYNC_PREDICTION, 4096);
+	                                                      FunctionKind::SCHEDULE_PREDICTION, 4096);
 
 	string sql = R"(
 explain analyze select transactionID, udf(amount_norm, business_hour_norm) 

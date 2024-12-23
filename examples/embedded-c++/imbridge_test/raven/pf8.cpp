@@ -28,7 +28,7 @@ int main() {
 	con.CreateVectorizedFunction<int64_t, double, double, double, double, double, double, double, double, double,
 	                             double, double, double, double, double, double, double, double, double, double, double,
 	                             double, double, double, double, double, double, double, double, double>(
-	    "udf", &udf_tmp, LogicalType::INVALID, FunctionKind::ASYNC_PREDICTION, 4096);
+	    "udf", &udf_tmp, LogicalType::INVALID, FunctionKind::SCHEDULE_PREDICTION, 4096);
 
 	string sql = R"(
 Explain analyze SELECT Time, Amount, udf(V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14, V15,

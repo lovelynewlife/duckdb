@@ -31,7 +31,7 @@ void bs_process(Connection &con, int dbt, int mlt, int max_bs = 6200, int now_bs
 		con.CreateVectorizedFunction<int64_t, double, double, double, double, double, double, double, int64_t, double,
 		                             int64_t, string_t, string_t, int64_t, int64_t, int64_t, int64_t, int64_t, int64_t,
 		                             int64_t, int64_t, int64_t, int64_t, int64_t>(
-		    udf_name, &udf_tmp, LogicalType::INVALID, FunctionKind::PREDICTION, now_bs);
+		    udf_name, &udf_tmp, LogicalType::INVALID, FunctionKind::BATCH_PREDICTION, now_bs);
 
 		ss.str("");
 		ss.clear();
