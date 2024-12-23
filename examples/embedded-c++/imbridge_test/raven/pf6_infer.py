@@ -19,9 +19,12 @@ con = duckdb.connect(
 root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/data/test_raven"
 
 onnx_path = f'{root_model_path}/Hospital/hospital_mlp_pipeline.onnx'
+s1 = time.perf_counter()
 ortconfig = ort.SessionOptions()
 hospital_onnx_session = ort.InferenceSession(onnx_path, sess_options=ortconfig)
 hospital_label = hospital_onnx_session.get_outputs()[0]
+e1 = time.perf_counter()
+model_load_time = e1-s1
 numerical_columns = ['hematocrit', 'neutrophils', 'sodium', 'glucose', 'bloodureanitro', 'creatinine', 'bmi', 'pulse',
                      'respiration', 'secondarydiagnosisnonicd9']
 categorical_columns = ['rcount', 'gender', 'dialysisrenalendstage', 'asthma', 'irondef', 'pneum', 'substancedependence',
@@ -72,7 +75,7 @@ for i in tqdm(range(times)):
     res_data = con.sql(sql).fetch_arrow_table()
     udf(*res_data)
     e = time.perf_counter()
-    t = e-s
+    t = e-s+model_load_time
     print(f"{i+1} : {t}")
     res = res + t
     if flag:

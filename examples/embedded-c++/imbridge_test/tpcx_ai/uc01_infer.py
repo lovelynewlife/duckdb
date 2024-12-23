@@ -25,7 +25,14 @@ root_model_path = f"/root/workspace/duckdb/examples/embedded-c++/imbridge_test/d
 
 model_file_name = f"{root_model_path}/model/{name}/{name}.python.model"
 
+model_load_time = 0
+
+s1 = time.perf_counter()
 model = joblib.load(model_file_name)
+e1 = time.perf_counter()
+
+model_load_time = e1-s1
+
 
 
 def udf(return_ratio, frequency):
@@ -83,7 +90,7 @@ for i in tqdm(range(times)):
     res_data=con.sql(sql).fetch_arrow_table()
     udf(*res_data)
     e=time.perf_counter()
-    t=e-s
+    t=e-s+model_load_time
     print(f"{i+1} : {t}")
     res=res + t
     if flag:

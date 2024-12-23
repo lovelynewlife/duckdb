@@ -23,10 +23,13 @@ root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/da
 
 scaler_path = f'{root_model_path}/Credit_Card/creditcard_standard_scale_model.pkl'
 model_path = f'{root_model_path}/Credit_Card/creditcard_catboost_gb.cbm'
+s1 = time.perf_counter()
 with open(scaler_path, 'rb') as f:
     scaler = pickle.load(f)
 model = CatBoostClassifier()
 model.load_model(model_path)
+e1 = time.perf_counter()
+model_load_time = e1-s1
 
 
 
@@ -54,7 +57,7 @@ for i in tqdm(range(times)):
     res_data = con.sql(sql).fetch_arrow_table()
     udf(*res_data)
     e = time.perf_counter()
-    t = e-s
+    t = e-s+model_load_time
     print(f"{i+1} : {t}")
     res = res + t
     if flag:

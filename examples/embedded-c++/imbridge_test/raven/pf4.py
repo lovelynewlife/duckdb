@@ -19,9 +19,12 @@ root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/da
 
 
 onnx_path = f'{root_model_path}/Flights/flights_rf_pipeline.onnx'
+s1 = time.perf_counter()
 ortconfig = ort.SessionOptions()
 flights_onnx_session = ort.InferenceSession(onnx_path, sess_options=ortconfig)
 flights_label = flights_onnx_session.get_outputs()[0]
+e1 = time.perf_counter()
+model_load_time = e1-s1
 numerical_columns = ['slatitude', 'slongitude', 'dlatitude', 'dlongitude']
 categorical_columns = ['name1', 'name2', 'name4', 'acountry', 'active', 'scity', 'scountry', 'stimezone', 'sdst',
                        'dcity', 'dcountry', 'dtimezone', 'ddst']
@@ -69,7 +72,7 @@ for i in tqdm(range(times)):
     s = time.perf_counter()
     con.sql(sql)
     e = time.perf_counter()
-    t = e-s
+    t = e-s+model_load_time
     print(f"{i+1} : {t}")
     res = res + t
     if flag:

@@ -20,12 +20,15 @@ root_model_path = "/root/workspace/duckdb/examples/embedded-c++/imbridge_test/da
 scaler_path = f'{root_model_path}/Expedia/expedia_standard_scale_model.pkl'
 enc_path = f'{root_model_path}/Expedia/expedia_one_hot_encoder.pkl'
 model_path = f'{root_model_path}/Expedia/expedia_dt_model.pkl'
+s1 = time.perf_counter()
 with open(scaler_path, 'rb') as f:
     scaler = pickle.load(f)
 with open(enc_path, 'rb') as f:
     enc = pickle.load(f)
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
+e1 = time.perf_counter()
+model_load_time = e1-s1
 
 
 def udf(data):
@@ -61,7 +64,7 @@ for i in tqdm(range(times)):
     np_data = res_data.fetchdf().values
     udf(np_data)
     e = time.perf_counter()
-    t = e-s
+    t = e-s+model_load_time
     print(f"{i+1} : {t}")
     res = res + t
     if flag:
