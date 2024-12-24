@@ -27,6 +27,13 @@ public:
 		return true;
 	}
 
+	bool RequiresFinalExecute() const {
+		return true;
+	}
+
+	OperatorFinalizeResultType FinalExecute(ExecutionContext &context, 
+	DataChunk &chunk, GlobalOperatorState &gstate, OperatorState &state) const final;
+
 	string ParamsToString() const override;
 
 protected:

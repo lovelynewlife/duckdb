@@ -2,13 +2,13 @@
 #include "duckdb/parallel/thread_context.hpp"
 #include "duckdb/execution/expression_executor.hpp"
 #include "duckdb/planner/expression/bound_reference_expression.hpp"
-#include "imbridge/execution/adaptive_batch_tuner.hpp"
 
 namespace duckdb {
 
 namespace imbridge {
 
-#define NEXT_EXE_ADAPT(STATE, X, SIZE, Y, Z, IF_RET_TYPE, ELSE_RET_TYPE, RET) \
+// remove this opaque macro
+/* #define NEXT_EXE_ADAPT(STATE, X, SIZE, Y, Z, IF_RET_TYPE, ELSE_RET_TYPE, RET) \
 auto &batch = X->NextBatch(SIZE); \
 X->ExternalProjectionReset(*Y, STATE.executor); \
 STATE.tuner.StartProfile(); \
@@ -23,13 +23,14 @@ if (Y->size() > STANDARD_VECTOR_SIZE) { \
     Z.Reference(*Y); \
     RET = ELSE_RET_TYPE;\
 }\
+*/
 
 class PredictionProjectionState : public PredictionState {
 public:
 	explicit PredictionProjectionState(ExecutionContext &context, const vector<unique_ptr<Expression>> &expressions,
     const vector<LogicalType> &input_types, idx_t prediction_size = INITIAL_PREDICTION_SIZE, bool adaptive = false, idx_t buffer_capacity = DEFAULT_RESERVED_CAPACITY)
-	    : PredictionState(context, input_types, prediction_size, buffer_capacity),
-         executor(context.client, expressions, buffer_capacity), tuner(prediction_size, adaptive){
+	    : PredictionState(context, input_types, expressions, adaptive, prediction_size, buffer_capacity),
+         executor(context.client, expressions, buffer_capacity) {
 			output_buffer = make_uniq<DataChunk>();
             vector<LogicalType> output_types;
 
@@ -41,7 +42,6 @@ public:
 
 	ExpressionExecutor executor;
 	unique_ptr<DataChunk> output_buffer;
-    AdaptiveBatchTuner tuner;
 
 public:
 	void Finalize(const PhysicalOperator &op, ExecutionContext &context) override {
@@ -60,6 +60,36 @@ PhysicalPredictionProjection::PhysicalPredictionProjection(vector<LogicalType> t
             this->user_defined_size = user_defined_size;
             use_adaptive_size = false;
         }
+}
+
+template<typename RET_TYPE>
+RET_TYPE PhysicalPredictionProjection::NextEvalAdapt(OperatorState &state, idx_t batch_size, DataChunk &chunk,
+ RET_TYPE ret_adapt, RET_TYPE no_adapt) const {
+    auto &local = state.Cast<PredictionProjectionState>();
+    auto &controller = local.controller;
+    auto &out_buf = local.output_buffer;
+    auto &tuner = local.tuner;
+
+    RET_TYPE ret;
+
+    auto &batch = controller->NextBatch(batch_size);
+    controller->ExternalProjectionReset(*out_buf, local.executor);
+    tuner.StartProfile();
+    local.executor.Execute(batch, *out_buf);
+    tuner.EndProfile();
+
+    if (out_buf->size() > STANDARD_VECTOR_SIZE) {
+        controller->BatchAdapting(*out_buf, chunk, local.base_offset);
+        local.output_left = out_buf->size() - STANDARD_VECTOR_SIZE;
+        local.base_offset += STANDARD_VECTOR_SIZE;
+
+        ret = ret_adapt;
+    } else {
+        chunk.Reference(*out_buf);
+        ret = no_adapt;
+    }
+
+    return ret;
 }
 
 OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &context, DataChunk &input, DataChunk &chunk,
@@ -93,8 +123,8 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
     case BatchControllerState::SLICING: {
         batch_size = state.tuner.GetBatchSize();
         if (controller->HasNext(batch_size)) {
-            NEXT_EXE_ADAPT(state, controller, batch_size, out_buf, chunk,
-             OperatorResultType::HAVE_MORE_OUTPUT, OperatorResultType::HAVE_MORE_OUTPUT, ret);
+            ret = NextEvalAdapt(state, batch_size, chunk,
+             OperatorResultType::HAVE_MORE_OUTPUT, OperatorResultType::HAVE_MORE_OUTPUT);
         } else {
             // check wheather the buffer should be reset
             if (controller->GetSize() == 0) {
@@ -136,17 +166,15 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
         } else {
             padded = batch_size - controller->GetSize();
             controller->PushChunk(input, 0, padded);
-
-            NEXT_EXE_ADAPT(state, controller, batch_size, out_buf, chunk, 
-            OperatorResultType::HAVE_MORE_OUTPUT, OperatorResultType::HAVE_MORE_OUTPUT, ret);
-
+            ret = NextEvalAdapt(state, batch_size, chunk,
+             OperatorResultType::HAVE_MORE_OUTPUT, OperatorResultType::HAVE_MORE_OUTPUT);
             controller->SetState(BatchControllerState::EMPTY);
         }  
         break;
     }
     
     default:
-        throw InternalException("ChunkBuffer State Unsupported");
+        throw InternalException("BatchController State Unsupported");
     }
 
     return ret;
@@ -197,12 +225,12 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
     }
 
     if (controller->HasNext(batch_size)) {
-        NEXT_EXE_ADAPT(local, controller, batch_size, out_buf, chunk, 
-        OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::HAVE_MORE_OUTPUT, ret);
+        ret = NextEvalAdapt(local, batch_size, chunk,
+         OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::HAVE_MORE_OUTPUT);
     } else {
         if (controller->GetSize() > 0) {
-            NEXT_EXE_ADAPT(local, controller, controller->GetSize(), out_buf, chunk, 
-            OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::FINISHED, ret);
+        ret = NextEvalAdapt(local, batch_size, chunk,
+        OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::FINISHED);
         } 
     }
 

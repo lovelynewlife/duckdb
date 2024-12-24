@@ -6,6 +6,7 @@
 #include "duckdb/common/vector.hpp"
 
 #include "imbridge/execution/batch_controller.hpp"
+#include "imbridge/execution/adaptive_batch_tuner.hpp"
 
 namespace duckdb {
 
@@ -56,13 +57,28 @@ namespace imbridge {
 
 class PredictionState : public OperatorState {
 public:
+
+    // for multiple expressions
 	explicit PredictionState(ExecutionContext &context,const vector<LogicalType> &input_types,
+    const vector<unique_ptr<Expression>> &expressions, bool adaptive,
 	idx_t prediction_size = INITIAL_PREDICTION_SIZE, idx_t buffer_capacity = DEFAULT_RESERVED_CAPACITY)
-	    : prediction_size(prediction_size), padded(0), output_left(0), base_offset(0) {
+	    : tuner(prediction_size, adaptive), prediction_size(prediction_size),
+         padded(0), output_left(0), base_offset(0) {
             controller = make_uniq<BatchController>();
             controller->Initialize(Allocator::Get(context.client), input_types,  buffer_capacity);
 	}
 
+    // for single expression
+    explicit PredictionState(ExecutionContext &context,const vector<LogicalType> &input_types,
+    Expression &expr, bool adaptive,
+	idx_t prediction_size = INITIAL_PREDICTION_SIZE, idx_t buffer_capacity = DEFAULT_RESERVED_CAPACITY)
+	    : tuner(prediction_size, adaptive), prediction_size(prediction_size),
+         padded(0), output_left(0), base_offset(0) {
+            controller = make_uniq<BatchController>();
+            controller->Initialize(Allocator::Get(context.client), input_types,  buffer_capacity);
+	}
+
+    AdaptiveBatchTuner tuner;
     unique_ptr<BatchController> controller;
     idx_t prediction_size;
 
@@ -71,6 +87,7 @@ public:
     // slicing range for batch adapting
     idx_t output_left;
     idx_t base_offset;
+
 };
 
 } // namespace imbridge

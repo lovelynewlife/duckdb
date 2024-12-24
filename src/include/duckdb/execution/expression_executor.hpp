@@ -30,6 +30,7 @@ public:
 	DUCKDB_API ExpressionExecutor(ClientContext &context, const vector<unique_ptr<Expression>> &expressions);
 
 	DUCKDB_API ExpressionExecutor(ClientContext &context, const vector<unique_ptr<Expression>> &expressions, idx_t capacity);
+	DUCKDB_API ExpressionExecutor(ClientContext &context, const Expression &expression, idx_t capacity);
 
 	ExpressionExecutor(ExpressionExecutor &&) = delete;
 

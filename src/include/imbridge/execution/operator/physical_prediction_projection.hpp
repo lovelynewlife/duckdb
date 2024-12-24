@@ -24,6 +24,9 @@ public:
 	OperatorResultType Execute(ExecutionContext &context, DataChunk &input, DataChunk &chunk,
 	                           GlobalOperatorState &gstate, OperatorState &state) const override;
 
+	template<typename RET_TYPE>
+	RET_TYPE NextEvalAdapt(OperatorState &state, idx_t batch_size, DataChunk &chunk, RET_TYPE ret_adapt, RET_TYPE no_adapt) const;
+
 	bool ParallelOperator() const override {
 		return true;
 	}
@@ -31,7 +34,6 @@ public:
 	bool RequiresFinalExecute() const {
 		return true;
 	}
-
 	OperatorFinalizeResultType FinalExecute(ExecutionContext &context, DataChunk &chunk, GlobalOperatorState &gstate,
 	                                        OperatorState &state) const final;
 

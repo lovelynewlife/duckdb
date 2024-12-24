@@ -21,6 +21,11 @@ ExpressionExecutor::ExpressionExecutor(ClientContext &context, const Expression 
 	AddExpression(expression);
 }
 
+ExpressionExecutor::ExpressionExecutor(ClientContext &context, const Expression &expression, idx_t capacity)
+    : ExpressionExecutor(context) {
+	AddExpression(expression, capacity);
+}
+
 ExpressionExecutor::ExpressionExecutor(ClientContext &context, const vector<unique_ptr<Expression>> &exprs)
     : ExpressionExecutor(context) {
 	D_ASSERT(exprs.size() > 0);
@@ -295,6 +300,9 @@ idx_t ExpressionExecutor::DefaultSelect(const Expression &expr, ExpressionState 
 	// generic selection of boolean expression:
 	// resolve the true/false expression first
 	// then use that to generate the selection vector
+
+	// note: this execution mode is bound by STANDARD_VECTOR_SIZE
+	// may lead to bugs in the case "bool func()" of SQL
 	bool intermediate_bools[STANDARD_VECTOR_SIZE];
 	Vector intermediate(LogicalType::BOOLEAN, data_ptr_cast(intermediate_bools));
 	Execute(expr, state, sel, count, intermediate);
