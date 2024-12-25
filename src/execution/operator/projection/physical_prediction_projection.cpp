@@ -10,21 +10,23 @@ namespace duckdb {
 
 namespace imbridge {
 
+/*
 #define NEXT_EXE_ADAPT(CTX, STATE, X, SIZE, Y, Z, IF_RET_TYPE, ELSE_RET_TYPE, RET)                                     \
-	auto &batch = X->NextBatch(SIZE);                                                                                  \
-	X->ExternalProjectionReset(CTX, *Y, STATE.executor);                                                               \
-	STATE.tuner.StartProfile();                                                                                        \
-	STATE.executor.Execute(batch, *Y);                                                                                 \
-	STATE.tuner.EndProfile();                                                                                          \
-	if (Y->size() > STANDARD_VECTOR_SIZE) {                                                                            \
-		X->BatchAdapting(*Y, Z, STATE.base_offset);                                                                    \
-		STATE.output_left = Y->size() - STANDARD_VECTOR_SIZE;                                                          \
-		STATE.base_offset += STANDARD_VECTOR_SIZE;                                                                     \
-		RET = IF_RET_TYPE;                                                                                             \
-	} else {                                                                                                           \
-		Z.Reference(*Y);                                                                                               \
-		RET = ELSE_RET_TYPE;                                                                                           \
-	}
+    auto &batch = X->NextBatch(SIZE);                                                                                  \
+    X->ExternalProjectionReset(CTX, *Y, STATE.executor);                                                               \
+    STATE.tuner.StartProfile();                                                                                        \
+    STATE.executor.Execute(batch, *Y);                                                                                 \
+    STATE.tuner.EndProfile();                                                                                          \
+    if (Y->size() > STANDARD_VECTOR_SIZE) {                                                                            \
+        X->BatchAdapting(*Y, Z, STATE.base_offset);                                                                    \
+        STATE.output_left = Y->size() - STANDARD_VECTOR_SIZE;                                                          \
+        STATE.base_offset += STANDARD_VECTOR_SIZE;                                                                     \
+        RET = IF_RET_TYPE;                                                                                             \
+    } else {                                                                                                           \
+        Z.Reference(*Y);                                                                                               \
+        RET = ELSE_RET_TYPE;                                                                                           \
+    }
+*/
 
 class PredictionProjectionState : public PredictionState {
 public:
@@ -101,8 +103,8 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
 		case BatchControllerState::SLICING: {
 			batch_size = state.tuner.GetBatchSize();
 			if (controller->HasNext(batch_size)) {
-				NEXT_EXE_ADAPT(context.client, state, controller, batch_size, out_buf, chunk,
-				               OperatorResultType::HAVE_MORE_OUTPUT, OperatorResultType::HAVE_MORE_OUTPUT, ret);
+				ret = NextEvalAdapt(context.client, state, batch_size, chunk, OperatorResultType::HAVE_MORE_OUTPUT,
+				                    OperatorResultType::HAVE_MORE_OUTPUT);
 			} else {
 				// check wheather the buffer should be reset
 				if (controller->GetSize() == 0) {
@@ -145,8 +147,8 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
 				padded = batch_size - controller->GetSize();
 				controller->PushChunk(context.client, input, 0, padded);
 
-				NEXT_EXE_ADAPT(context.client, state, controller, batch_size, out_buf, chunk,
-				               OperatorResultType::HAVE_MORE_OUTPUT, OperatorResultType::HAVE_MORE_OUTPUT, ret);
+				ret = NextEvalAdapt(context.client, state, batch_size, chunk, OperatorResultType::HAVE_MORE_OUTPUT,
+				                    OperatorResultType::HAVE_MORE_OUTPUT);
 
 				controller->SetState(BatchControllerState::EMPTY);
 			}
@@ -154,45 +156,87 @@ OperatorResultType PhysicalPredictionProjection::Execute(ExecutionContext &conte
 		}
 
 		default:
-			throw InternalException("ChunkBuffer State Unsupported");
+			throw InternalException("BatchControlle State Unsupported");
 		}
 
 		return ret;
 	} else if (kind == FunctionKind::ASYNC_PREDICTION) {
-		auto &res_collect = state.res_collect;
-		for (auto it = res_collect.begin(); it != res_collect.end(); ++it) {
-			if (it->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-				try {
-					unique_ptr<DataChunk> out_buffer = it->get();
-					out_buffer->Copy(chunk);
-					res_collect.erase(it);
-					context.client.num_of_async_tasks--;
-					return OperatorResultType::HAVE_MORE_OUTPUT;
-				} catch (const std::exception &e) {
-					throw InternalException(e.what());
-				}
-			}
-		}
-
-		if (context.client.num_of_async_tasks < context.client.upbound) {
-			unique_ptr<DataChunk> in_buffer = make_uniq<DataChunk>();
-			in_buffer->Initialize(Allocator::Get(context.client), input.GetTypes(), STANDARD_VECTOR_SIZE);
-			input.Copy(*in_buffer);
-			res_collect.push_back(
-			    std::async(std::launch::async, [&context, &state, in_buffer = std::move(in_buffer), &chunk]() mutable {
-				    return state.controller->AsyncExecuteExpression(context.client, state.executor,
-				                                                    std::move(in_buffer), chunk.GetTypes());
-			    }));
-			context.client.num_of_async_tasks++;
-			return OperatorResultType::NEED_MORE_INPUT;
-		}
-		return OperatorResultType::HAVE_MORE_OUTPUT;
+		return AsyncExecute(context, state_p, input, chunk, false, OperatorResultType::NEED_MORE_INPUT,
+		                    OperatorResultType::HAVE_MORE_OUTPUT);
 	} else if (kind == FunctionKind::SCHEDULE_PREDICTION) {
 		state.executor.Execute(input, chunk);
 		return OperatorResultType::NEED_MORE_INPUT;
 	} else {
 		throw InternalException("Unsupported Prediction Function Kind");
 	}
+}
+
+template <typename RET_TYPE>
+RET_TYPE PhysicalPredictionProjection::NextEvalAdapt(ClientContext &ctx, OperatorState &state, idx_t batch_size,
+                                                     DataChunk &chunk, RET_TYPE ret_adapt, RET_TYPE no_adapt) const {
+	auto &local = state.Cast<PredictionProjectionState>();
+	auto &controller = local.controller;
+	auto &out_buf = local.output_buffer;
+	auto &tuner = local.tuner;
+	RET_TYPE ret;
+	auto &batch = controller->NextBatch(batch_size);
+	controller->ExternalProjectionReset(ctx, *out_buf, local.executor);
+	tuner.StartProfile();
+	local.executor.Execute(batch, *out_buf);
+	tuner.EndProfile();
+	if (out_buf->size() > STANDARD_VECTOR_SIZE) {
+		controller->BatchAdapting(*out_buf, chunk, local.base_offset);
+		local.output_left = out_buf->size() - STANDARD_VECTOR_SIZE;
+		local.base_offset += STANDARD_VECTOR_SIZE;
+		ret = ret_adapt;
+	} else {
+		chunk.Reference(*out_buf);
+		ret = no_adapt;
+	}
+	return ret;
+}
+
+template <typename RET_TYPE>
+RET_TYPE PhysicalPredictionProjection::AsyncExecute(ExecutionContext &context, OperatorState &state_p, DataChunk &input,
+                                                    DataChunk &result, bool final_execute, RET_TYPE need_or_finish,
+                                                    RET_TYPE have) const {
+	auto &state = state_p.Cast<PredictionProjectionState>();
+	auto &res_collect = state.res_collect;
+	for (auto it = res_collect.begin(); it != res_collect.end(); ++it) {
+		if (it->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
+			try {
+				unique_ptr<DataChunk> out_buffer = it->get();
+				result.Append(*out_buffer);
+				res_collect.erase(it);
+				context.client.num_of_async_tasks--;
+				return have;
+			} catch (const std::exception &e) {
+				throw InternalException(e.what());
+			}
+		}
+	}
+
+	if (final_execute) {
+		if (res_collect.empty()) {
+			return need_or_finish;
+		} else {
+			return have;
+		}
+	}
+
+	if (context.client.num_of_async_tasks < context.client.upbound) {
+		unique_ptr<DataChunk> in_buffer = make_uniq<DataChunk>();
+		in_buffer->Initialize(Allocator::Get(context.client), input.GetTypes(), STANDARD_VECTOR_SIZE);
+		input.Copy(*in_buffer);
+		res_collect.push_back(
+		    std::async(std::launch::async, [&context, &state, in_buffer = std::move(in_buffer), &result]() mutable {
+			    return state.controller->AsyncExecuteExpression(context.client, state.executor, std::move(in_buffer),
+			                                                    result.GetTypes());
+		    }));
+		context.client.num_of_async_tasks++;
+		return need_or_finish;
+	}
+	return have;
 }
 
 unique_ptr<OperatorState> PhysicalPredictionProjection::GetOperatorState(ExecutionContext &context) const {
@@ -247,38 +291,19 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
 		}
 
 		if (controller->HasNext(batch_size)) {
-			NEXT_EXE_ADAPT(context.client, local, controller, batch_size, out_buf, chunk,
-			               OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::HAVE_MORE_OUTPUT,
-			               ret);
+			ret = NextEvalAdapt(context.client, local, batch_size, chunk, OperatorFinalizeResultType::HAVE_MORE_OUTPUT,
+			                    OperatorFinalizeResultType::HAVE_MORE_OUTPUT);
 		} else {
 			if (controller->GetSize() > 0) {
-				NEXT_EXE_ADAPT(context.client, local, controller, controller->GetSize(), out_buf, chunk,
-				               OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::FINISHED, ret);
+				ret = NextEvalAdapt(context.client, local, controller->GetSize(), chunk,
+				                    OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::FINISHED);
 			}
 		}
 
 		return ret;
 	} else if (kind == FunctionKind::ASYNC_PREDICTION) {
-		auto &res_collect = local.res_collect;
-
-		for (auto it = res_collect.begin(); it != res_collect.end(); ++it) {
-			if (it->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
-				try {
-					unique_ptr<DataChunk> out_buffer = it->get();
-					out_buffer->Copy(chunk);
-					res_collect.erase(it);
-					context.client.num_of_async_tasks--;
-					return OperatorFinalizeResultType::HAVE_MORE_OUTPUT;
-				} catch (const std::exception &e) {
-					throw InternalException(e.what());
-				}
-			}
-		}
-		if (res_collect.empty()) {
-			return OperatorFinalizeResultType::FINISHED;
-		} else {
-			return OperatorFinalizeResultType::HAVE_MORE_OUTPUT;
-		}
+		return AsyncExecute(context, state, chunk, chunk, true, OperatorFinalizeResultType::FINISHED,
+		                    OperatorFinalizeResultType::HAVE_MORE_OUTPUT);
 	} else if (kind == FunctionKind::SCHEDULE_PREDICTION) {
 		return OperatorFinalizeResultType::FINISHED;
 	} else {
