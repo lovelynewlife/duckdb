@@ -23,6 +23,9 @@ public:
 public:
 	unique_ptr<OperatorState> GetOperatorState(ExecutionContext &context) const override;
 
+	template<typename RET_TYPE>
+	RET_TYPE NextEvalAdapt(OperatorState &state, idx_t batch_size, DataChunk &chunk, RET_TYPE ret_adapt, RET_TYPE no_adapt) const;
+
 	bool ParallelOperator() const override {
 		return true;
 	}

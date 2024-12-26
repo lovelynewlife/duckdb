@@ -240,6 +240,10 @@ namespace imbridge {
         return sliced;
     }
 
+    DataChunk & BatchController::CurrentBatch() {
+        return sliced;
+    }
+
     bool BatchController::HasNext(idx_t required) {
         return high_offset >= base_offset + required;
     }
@@ -276,9 +280,30 @@ namespace imbridge {
         }
     }
 
+    void BatchController::ExternalFilterReset(SelectionVector &sel, idx_t &sel_capacity, ExpressionExecutor &executor) {
+        if (sel_capacity < store.capacity) {
+            sel.selection_data = make_shared_ptr<SelectionData>(store.capacity);
+            sel_capacity = store.capacity;
+
+            // resize all the intermediate chunks in executor
+            auto &executor_states = executor.GetStates();
+            for(auto &executor_state: executor_states) {
+                executor_state->root_state->UpdateCapacity(store.capacity);
+            }
+        }
+
+        sel.sel_vector = sel.selection_data->owned_data.get();
+    }
+
     void BatchController::BatchAdapting(DataChunk &input, DataChunk &output, idx_t start_offset, idx_t size) {
         idx_t stop_offset = start_offset + size;
         InternalSlicing(input, output, start_offset, stop_offset);
+    }
+
+    void BatchController::BatchAdapting(DataChunk &input, SelectionVector &sel, DataChunk &output, idx_t start_offset, idx_t size) {
+        sel.sel_vector = sel.selection_data->owned_data.get() + start_offset;
+        output.Reference(input);
+        output.Slice(sel, size);
     }
 
 } // namespace imbridge

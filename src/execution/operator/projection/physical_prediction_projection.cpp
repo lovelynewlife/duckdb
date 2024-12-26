@@ -229,8 +229,8 @@ OperatorFinalizeResultType PhysicalPredictionProjection::FinalExecute(ExecutionC
          OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::HAVE_MORE_OUTPUT);
     } else {
         if (controller->GetSize() > 0) {
-        ret = NextEvalAdapt(local, batch_size, chunk,
-        OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::FINISHED);
+            ret = NextEvalAdapt(local, controller->GetSize(), chunk,
+            OperatorFinalizeResultType::HAVE_MORE_OUTPUT, OperatorFinalizeResultType::FINISHED);
         } 
     }
 

@@ -16,6 +16,10 @@
 namespace duckdb {
 class VectorBuffer;
 
+namespace imbridge {
+	class BatchController;
+}
+
 struct SelectionData {
 	DUCKDB_API explicit SelectionData(idx_t count);
 
@@ -23,6 +27,9 @@ struct SelectionData {
 };
 
 struct SelectionVector {
+
+	friend class imbridge::BatchController;
+
 	SelectionVector() : sel_vector(nullptr) {
 	}
 	explicit SelectionVector(sel_t *sel) {

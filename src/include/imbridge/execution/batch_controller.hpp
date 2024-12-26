@@ -21,6 +21,7 @@ public:
     void PushChunk(const DataChunk &other);
     void PushChunk(const DataChunk &other, idx_t start_offset, idx_t count);
     DataChunk & NextBatch(idx_t required);
+    DataChunk & CurrentBatch();
     bool HasNext(idx_t required);
 public:
     BatchControllerState GetState();
@@ -29,8 +30,15 @@ public:
 public:
     // helper method for external projection state reset
     void ExternalProjectionReset(DataChunk &input, ExpressionExecutor &executor);
+
+    // helper method for external filter state reset
+    void ExternalFilterReset(SelectionVector &sel, idx_t &sel_capacity, ExpressionExecutor &executor);
+
     // helper method for batch adpater, keep the output batch size <= STANDARD_VECTOR_SIZE
     void BatchAdapting(DataChunk &input, DataChunk &output, idx_t start_offset, idx_t size=STANDARD_VECTOR_SIZE);
+
+    // helper method for batch adpater in filter, slice the selection vector and add it to the output chunk
+    void BatchAdapting(DataChunk &input, SelectionVector &sel, DataChunk &output, idx_t start_offset, idx_t size=STANDARD_VECTOR_SIZE);
 
 private:
     void InternalVecShift(Vector &vec, data_ptr_t data_view, idx_t offset);
