@@ -26,7 +26,8 @@ void PredictionFuncChecker::VisitExpression(unique_ptr<Expression> *expression, 
 		if (func_expr.function.bridge_info) {
 			if (func_expr.function.bridge_info->kind == FunctionKind::BATCH_PREDICTION ||
 			    func_expr.function.bridge_info->kind == FunctionKind::ASYNC_PREDICTION ||
-			    func_expr.function.bridge_info->kind == FunctionKind::SCHEDULE_PREDICTION) {
+			    func_expr.function.bridge_info->kind == FunctionKind::SCHEDULE_PREDICTION || 
+				func_expr.function.bridge_info->kind == FunctionKind::ASYNC_BATCH_PREDICTION ) {
 				kind = func_expr.function.bridge_info->kind;
 				total_prediction_func_count += 1;
 				user_batch_size_map[root_idx] =

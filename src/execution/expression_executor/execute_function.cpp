@@ -80,7 +80,8 @@ void ExpressionExecutor::Execute(const BoundFunctionExpression &expr, Expression
 	D_ASSERT(expr.function.function);
 	if (expr.function.bridge_info && (expr.function.bridge_info->kind == FunctionKind::BATCH_PREDICTION ||
 	                                  expr.function.bridge_info->kind == FunctionKind::ASYNC_PREDICTION ||
-	                                  expr.function.bridge_info->kind == FunctionKind::SCHEDULE_PREDICTION)) {
+	                                  expr.function.bridge_info->kind == FunctionKind::SCHEDULE_PREDICTION || 
+									  expr.function.bridge_info->kind == FunctionKind::ASYNC_BATCH_PREDICTION)) {
 		context->ScheduleUDF(arguments, result);
 	} else {
 		expr.function.function(arguments, *state, result);

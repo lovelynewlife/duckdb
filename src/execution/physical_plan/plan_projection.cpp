@@ -48,7 +48,8 @@ unique_ptr<PhysicalOperator> PhysicalPlanGenerator::CreatePlan(LogicalProjection
 	if (func_checker.CheckExprs([&](idx_t count) { return count == 1; })) {
 		D_ASSERT(func_checker.kind == FunctionKind::BATCH_PREDICTION ||
 		         func_checker.kind == FunctionKind::ASYNC_PREDICTION ||
-		         func_checker.kind == FunctionKind::SCHEDULE_PREDICTION);
+		         func_checker.kind == FunctionKind::SCHEDULE_PREDICTION ||
+				 func_checker.kind == FunctionKind::ASYNC_BATCH_PREDICTION);
 		auto root_idx = *func_checker.root_idx_list.begin();
 		auto prediction_size = func_checker.user_batch_size_map[root_idx];
 

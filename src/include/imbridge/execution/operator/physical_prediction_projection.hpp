@@ -27,12 +27,16 @@ public:
 	                           GlobalOperatorState &gstate, OperatorState &state) const override;
 
 	template <typename RET_TYPE>
-	RET_TYPE AsyncExecute(ExecutionContext &context, OperatorState &state, DataChunk &input, DataChunk &result,
+	RET_TYPE AsyncExecute(ClientContext &context, OperatorState &state, DataChunk &input, DataChunk &result,
 	                      bool final_execute, RET_TYPE need_or_finish, RET_TYPE have) const;
 
 	template <typename RET_TYPE>
-	RET_TYPE NextEvalAdapt(ClientContext &ctx, OperatorState &state, idx_t batch_size, DataChunk &chunk, RET_TYPE ret_adapt,
-	                       RET_TYPE no_adapt) const;
+	RET_TYPE AsyncNextEvalAdapt(ClientContext &ctx, OperatorState &state, idx_t batch_size, RET_TYPE need,
+	                            RET_TYPE have) const;
+
+	template <typename RET_TYPE>
+	RET_TYPE NextEvalAdapt(ClientContext &ctx, OperatorState &state, idx_t batch_size, DataChunk &chunk,
+	                       RET_TYPE ret_adapt, RET_TYPE no_adapt) const;
 
 	bool ParallelOperator() const override {
 		return true;
