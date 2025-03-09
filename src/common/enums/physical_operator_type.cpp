@@ -157,6 +157,10 @@ string PhysicalOperatorToString(PhysicalOperatorType type) {
 		return "VERIFY_VECTOR";
 	case PhysicalOperatorType::UPDATE_EXTENSIONS:
 		return "UPDATE_EXTENSIONS";
+	case PhysicalOperatorType::PREDICTION_PROJECTION:
+		return "PREDICTION PROJECTION";
+	case PhysicalOperatorType::PREDICTION_FILTER:
+		return "PREDICTION FILTER";
 	case PhysicalOperatorType::INVALID:
 		break;
 	}

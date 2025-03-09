@@ -6,19 +6,33 @@
 
 namespace duckdb {
 
-void ExpressionState::AddChild(Expression *expr) {
+void ExpressionState::AddChild(Expression *expr, idx_t capacity) {
 	types.push_back(expr->return_type);
-	child_states.push_back(ExpressionExecutor::InitializeState(*expr, root));
+	child_states.push_back(ExpressionExecutor::InitializeState(*expr, root, capacity));
 }
 
-void ExpressionState::Finalize(bool empty) {
+void ExpressionState::Finalize(bool empty, idx_t capacity) {
 	if (types.empty()) {
 		return;
 	}
 	if (empty) {
 		intermediate_chunk.InitializeEmpty(types);
+		intermediate_chunk.SetCapacity(capacity);
 	} else {
-		intermediate_chunk.Initialize(GetAllocator(), types);
+		intermediate_chunk.Initialize(GetAllocator(), types, capacity);
+	}
+}
+
+void ExpressionState::UpdateCapacity(idx_t capacity) {
+	if (capacity > intermediate_chunk.GetCapacity()) {
+
+        for (idx_t i = 0; i < intermediate_chunk.ColumnCount(); i++) {
+			intermediate_chunk.data[i].Resize(0, capacity);
+		}
+		intermediate_chunk.SetCapacity(capacity);
+	}
+	for (auto &state: child_states) {
+		state->UpdateCapacity(capacity);
 	}
 }
 

@@ -6,10 +6,10 @@
 namespace duckdb {
 
 unique_ptr<ExpressionState> ExpressionExecutor::InitializeState(const BoundCastExpression &expr,
-                                                                ExpressionExecutorState &root) {
+                                                                ExpressionExecutorState &root, idx_t capacity) {
 	auto result = make_uniq<ExecuteFunctionState>(expr, root);
-	result->AddChild(expr.child.get());
-	result->Finalize();
+	result->AddChild(expr.child.get(), capacity);
+	result->Finalize(false, capacity);
 	if (expr.bound_cast.init_local_state) {
 		CastLocalStateParameters parameters(root.executor->GetContext(), expr.bound_cast.cast_data);
 		result->local_state = expr.bound_cast.init_local_state(parameters);

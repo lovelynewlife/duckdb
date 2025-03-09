@@ -17,6 +17,8 @@
 #include "duckdb/storage/statistics/base_statistics.hpp"
 #include "duckdb/common/optional_ptr.hpp"
 
+#include "imbridge/execution/plan_prediction_util.hpp"
+
 namespace duckdb {
 
 struct FunctionLocalState {
@@ -151,6 +153,9 @@ public:
 	function_deserialize_t deserialize;
 	//! Additional function info, passed to the bind
 	shared_ptr<ScalarFunctionInfo> function_info;
+
+	//! Additional function info used in IMBridge
+	shared_ptr<IMBridgeExtraInfo> bridge_info;
 
 	DUCKDB_API bool operator==(const ScalarFunction &rhs) const;
 	DUCKDB_API bool operator!=(const ScalarFunction &rhs) const;

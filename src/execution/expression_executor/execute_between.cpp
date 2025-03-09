@@ -87,12 +87,12 @@ static idx_t BetweenLoopTypeSwitch(Vector &input, Vector &lower, Vector &upper, 
 }
 
 unique_ptr<ExpressionState> ExpressionExecutor::InitializeState(const BoundBetweenExpression &expr,
-                                                                ExpressionExecutorState &root) {
+                                                                ExpressionExecutorState &root, idx_t capacity) {
 	auto result = make_uniq<ExpressionState>(expr, root);
-	result->AddChild(expr.input.get());
-	result->AddChild(expr.lower.get());
-	result->AddChild(expr.upper.get());
-	result->Finalize();
+	result->AddChild(expr.input.get(), capacity);
+	result->AddChild(expr.lower.get(), capacity);
+	result->AddChild(expr.upper.get(), capacity);
+	result->Finalize(false, capacity);
 	return result;
 }
 

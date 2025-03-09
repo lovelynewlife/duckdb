@@ -24,6 +24,10 @@ class VectorStructBuffer;
 class VectorListBuffer;
 struct SelCache;
 
+namespace imbridge {
+	class BatchController;
+}
+
 struct UnifiedVectorFormat {
 	DUCKDB_API UnifiedVectorFormat();
 	// disable copy constructors
@@ -89,6 +93,8 @@ class Vector {
 
 	friend class DataChunk;
 	friend class VectorCacheBuffer;
+
+	friend class imbridge::BatchController;
 
 public:
 	//! Create a vector that references the other vector

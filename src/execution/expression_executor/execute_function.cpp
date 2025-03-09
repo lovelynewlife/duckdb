@@ -11,12 +11,12 @@ ExecuteFunctionState::~ExecuteFunctionState() {
 }
 
 unique_ptr<ExpressionState> ExpressionExecutor::InitializeState(const BoundFunctionExpression &expr,
-                                                                ExpressionExecutorState &root) {
+                                                                ExpressionExecutorState &root, idx_t capacity) {
 	auto result = make_uniq<ExecuteFunctionState>(expr, root);
 	for (auto &child : expr.children) {
-		result->AddChild(child.get());
+		result->AddChild(child.get(), capacity);
 	}
-	result->Finalize();
+	result->Finalize(false, capacity);
 	if (expr.function.init_local_state) {
 		result->local_state = expr.function.init_local_state(*result, expr, expr.bind_info.get());
 	}

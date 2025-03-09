@@ -8,6 +8,9 @@ DEFAULT: FunctionNullHandling
 NATIVE: PythonUDFType
 ARROW: PythonUDFType
 
+COMMON: PythonUDFKind
+PREDICTION: PythonUDFKind
+
 class FunctionNullHandling:
     DEFAULT: FunctionNullHandling
     SPECIAL: FunctionNullHandling
@@ -27,6 +30,19 @@ class PythonUDFType:
     def __index__(self) -> int: ...
     @property
     def __members__(self) -> Dict[str, PythonUDFType]: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def value(self) -> int: ...
+
+
+class PythonUDFKind:
+    COMMON: PythonUDFKind
+    PREDICTION: PythonUDFKind
+    def __int__(self) -> int: ...
+    def __index__(self) -> int: ...
+    @property
+    def __members__(self) -> Dict[str, PythonUDFKind]: ...
     @property
     def name(self) -> str: ...
     @property

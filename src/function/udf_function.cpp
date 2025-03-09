@@ -8,11 +8,13 @@
 namespace duckdb {
 
 void UDFWrapper::RegisterFunction(string name, vector<LogicalType> args, LogicalType ret_type,
-                                  scalar_function_t udf_function, ClientContext &context, LogicalType varargs) {
+                                  scalar_function_t udf_function, ClientContext &context, LogicalType varargs,
+								  FunctionKind kind, u_int32_t batch_size) {
 
 	ScalarFunction scalar_function(std::move(name), std::move(args), std::move(ret_type), std::move(udf_function));
 	scalar_function.varargs = std::move(varargs);
 	scalar_function.null_handling = FunctionNullHandling::SPECIAL_HANDLING;
+	scalar_function.bridge_info = make_shared_ptr<IMBridgeExtraInfo>(kind, batch_size);
 	CreateScalarFunctionInfo info(scalar_function);
 	info.schema = DEFAULT_SCHEMA;
 	context.RegisterFunction(info);

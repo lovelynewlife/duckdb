@@ -418,6 +418,8 @@ OperatorResultType PipelineExecutor::Execute(DataChunk &input, DataChunk &result
 			current_chunk.Verify();
 		}
 
+		// IMBridge optimization: we deem current_chunk size = 0 as the signal that
+		// the prediction operator needs more data from source
 		if (current_chunk.size() == 0) {
 			// no output from this operator!
 			if (current_idx == initial_idx) {

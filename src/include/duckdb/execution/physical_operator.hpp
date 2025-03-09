@@ -19,6 +19,8 @@
 #include "duckdb/execution/physical_operator_states.hpp"
 #include "duckdb/common/enums/order_preservation_type.hpp"
 
+#include "duckdb/function/scalar_function.hpp"
+
 namespace duckdb {
 class Event;
 class Executor;

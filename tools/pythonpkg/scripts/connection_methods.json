@@ -78,6 +78,16 @@
 				"default": "PythonUDFType.NATIVE"
 			},
 			{
+				"name": "kind",
+				"type": "Optional[PythonUDFKind]",
+				"default": "PythonUDFKind.COMMON"
+			},
+			{
+				"name": "batch_size",
+				"type": "int",
+				"default": "2048"
+			},
+			{
 				"name": "null_handling",
 				"type": "Optional[FunctionNullHandling]",
 				"default": "FunctionNullHandling.DEFAULT"

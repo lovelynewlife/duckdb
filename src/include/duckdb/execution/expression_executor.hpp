@@ -28,6 +28,10 @@ public:
 	DUCKDB_API ExpressionExecutor(ClientContext &context, const Expression *expression);
 	DUCKDB_API ExpressionExecutor(ClientContext &context, const Expression &expression);
 	DUCKDB_API ExpressionExecutor(ClientContext &context, const vector<unique_ptr<Expression>> &expressions);
+
+	DUCKDB_API ExpressionExecutor(ClientContext &context, const vector<unique_ptr<Expression>> &expressions, idx_t capacity);
+	DUCKDB_API ExpressionExecutor(ClientContext &context, const Expression &expression, idx_t capacity);
+
 	ExpressionExecutor(ExpressionExecutor &&) = delete;
 
 	//! The expressions of the executor
@@ -42,7 +46,7 @@ public:
 	Allocator &GetAllocator();
 
 	//! Add an expression to the set of to-be-executed expressions of the executor
-	DUCKDB_API void AddExpression(const Expression &expr);
+	DUCKDB_API void AddExpression(const Expression &expr, idx_t capacity = STANDARD_VECTOR_SIZE);
 
 	//! Execute the set of expressions with the given input chunk and store the result in the output chunk
 	DUCKDB_API void Execute(DataChunk *input, DataChunk &result);
@@ -72,7 +76,7 @@ public:
 	DUCKDB_API static bool TryEvaluateScalar(ClientContext &context, const Expression &expr, Value &result);
 
 	//! Initialize the state of a given expression
-	static unique_ptr<ExpressionState> InitializeState(const Expression &expr, ExpressionExecutorState &state);
+	static unique_ptr<ExpressionState> InitializeState(const Expression &expr, ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 
 	inline void SetChunk(DataChunk *chunk) {
 		this->chunk = chunk;
@@ -84,26 +88,28 @@ public:
 	DUCKDB_API vector<unique_ptr<ExpressionExecutorState>> &GetStates();
 
 protected:
-	void Initialize(const Expression &expr, ExpressionExecutorState &state);
+	void Initialize(const Expression &expr, ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 
 	static unique_ptr<ExpressionState> InitializeState(const BoundReferenceExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundBetweenExpression &expr,
-	                                                   ExpressionExecutorState &state);
-	static unique_ptr<ExpressionState> InitializeState(const BoundCaseExpression &expr, ExpressionExecutorState &state);
-	static unique_ptr<ExpressionState> InitializeState(const BoundCastExpression &expr, ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
+	static unique_ptr<ExpressionState> InitializeState(const BoundCaseExpression &expr,
+														ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
+	static unique_ptr<ExpressionState> InitializeState(const BoundCastExpression &expr,
+													 ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundComparisonExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundConjunctionExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundConstantExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundFunctionExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundOperatorExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 	static unique_ptr<ExpressionState> InitializeState(const BoundParameterExpression &expr,
-	                                                   ExpressionExecutorState &state);
+	                                                   ExpressionExecutorState &state, idx_t capacity = STANDARD_VECTOR_SIZE);
 
 	void Execute(const Expression &expr, ExpressionState *state, const SelectionVector *sel, idx_t count,
 	             Vector &result);

@@ -20,7 +20,10 @@ add_library_unity(
   radix_partitioned_hashtable.cpp
   reservoir_sample.cpp
   window_executor.cpp
-  window_segment_tree.cpp)
+  window_segment_tree.cpp
+  batch_controller.cpp
+  adaptive_batch_tuner.cpp
+  )
 set(ALL_OBJECT_FILES
     ${ALL_OBJECT_FILES} $<TARGET_OBJECTS:duckdb_execution>
     PARENT_SCOPE)

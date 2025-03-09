@@ -1,9 +1,13 @@
 #include "duckdb/execution/operator/projection/physical_projection.hpp"
+#include "imbridge/execution/operator/physical_prediction_projection.hpp"
 #include "duckdb/execution/physical_plan_generator.hpp"
 #include "duckdb/planner/operator/logical_projection.hpp"
 #include "duckdb/planner/expression/bound_reference_expression.hpp"
+#include "imbridge/execution/plan_prediction_util.hpp"
 
 namespace duckdb {
+
+using namespace imbridge;
 
 unique_ptr<PhysicalOperator> PhysicalPlanGenerator::CreatePlan(LogicalProjection &op) {
 	D_ASSERT(op.children.size() == 1);
@@ -35,7 +39,23 @@ unique_ptr<PhysicalOperator> PhysicalPlanGenerator::CreatePlan(LogicalProjection
 			return plan;
 		}
 	}
+	
+	// IMBridge optimization: check the expression list
+	// try to extract prediction function and transform it as a standalone physical projection operator
+	// Optimization condition： only one prediction function appears in "op.expressions" 
+	PredictionFuncChecker func_checker(op.expressions);
 
+	if(func_checker.CheckExprs([&](idx_t count){return count == 1;})) {
+		auto root_idx = *func_checker.root_idx_list.begin();
+		auto prediction_size = func_checker.user_batch_size_map[root_idx];
+
+		auto prediction_projection =  make_uniq<PhysicalPredictionProjection>(op.types, std::move(op.expressions),
+		 op.estimated_cardinality, prediction_size);
+		prediction_projection->children.push_back(std::move(plan));
+		return std::move(prediction_projection);
+	}
+	
+	// Fallback to the normal plan generation path
 	auto projection = make_uniq<PhysicalProjection>(op.types, std::move(op.expressions), op.estimated_cardinality);
 	projection->children.push_back(std::move(plan));
 	return std::move(projection);

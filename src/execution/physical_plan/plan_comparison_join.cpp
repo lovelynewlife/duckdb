@@ -18,6 +18,8 @@
 
 namespace duckdb {
 
+using namespace imbridge;
+
 bool ExtractNumericValue(Value val, int64_t &result) {
 	if (!val.type().IsIntegral()) {
 		switch (val.type().InternalType()) {
@@ -194,6 +196,17 @@ unique_ptr<PhysicalOperator> PhysicalPlanGenerator::PlanComparisonJoin(LogicalCo
 	const auto prefer_range_joins = client_config.prefer_range_joins && can_iejoin;
 
 	unique_ptr<PhysicalOperator> plan;
+
+	// TODO: May be we can perform IMBridge optimization in the Join conditions.
+	// It is a rare case for prediction function as a join condition here, 
+	// since it is extracted as an arbitrary expression (non-join condition) while planning or optimization
+	// IMBridge optimization: check the join conditions
+	// try to extract the prediction function within a predicate and lift it as a standalone physical filter
+	// Optimization conditions： 
+	// 1. only one prediction function appears in "op.conditions" (children of the conjunction predicate)
+	// 2. only perform on inner join
+	// remove the prediction function related condition, if conditions become empty after extraction, perform crossproduct join.
+
 	if (has_equality && !prefer_range_joins) {
 		// Equality join with small number of keys : possible perfect join optimization
 		PerfectHashJoinStats perfect_join_stats;

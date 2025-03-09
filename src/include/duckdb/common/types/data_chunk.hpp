@@ -22,6 +22,10 @@ class VectorCache;
 class Serializer;
 class Deserializer;
 
+namespace imbridge {
+	class BatchController;
+}
+
 //!  A Data Chunk represents a set of vectors.
 /*!
     The data chunk class is the intermediate representation used by the
@@ -41,6 +45,9 @@ class Deserializer;
    selection vector that underlying vectors can point to.
 */
 class DataChunk {
+
+friend class imbridge::BatchController;
+
 public:
 	//! Creates an empty DataChunk
 	DUCKDB_API DataChunk();
@@ -66,6 +73,12 @@ public:
 	inline void SetCapacity(idx_t capacity_p) {
 		this->capacity = capacity_p;
 	}
+
+	inline idx_t GetCapacity() {
+		return this->capacity;
+	}
+
+
 	inline void SetCapacity(const DataChunk &other) {
 		SetCapacity(other.capacity);
 	}

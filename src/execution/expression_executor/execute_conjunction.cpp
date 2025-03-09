@@ -16,12 +16,12 @@ struct ConjunctionState : public ExpressionState {
 };
 
 unique_ptr<ExpressionState> ExpressionExecutor::InitializeState(const BoundConjunctionExpression &expr,
-                                                                ExpressionExecutorState &root) {
+                                                                ExpressionExecutorState &root, idx_t capacity) {
 	auto result = make_uniq<ConjunctionState>(expr, root);
 	for (auto &child : expr.children) {
-		result->AddChild(child.get());
+		result->AddChild(child.get(), capacity);
 	}
-	result->Finalize();
+	result->Finalize(false, capacity);
 	return std::move(result);
 }
 

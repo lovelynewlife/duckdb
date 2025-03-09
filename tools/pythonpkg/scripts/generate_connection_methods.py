@@ -45,6 +45,7 @@ def generate():
         'False': 'false',
         'None': 'py::none()',
         'PythonUDFType.NATIVE': 'PythonUDFType::NATIVE',
+        'PythonUDFKind.COMMON': 'PythonUDFKind::COMMON',
         'PythonExceptionHandling.DEFAULT': 'PythonExceptionHandling::FORWARD_ERROR',
         'FunctionNullHandling.DEFAULT': 'FunctionNullHandling::DEFAULT_NULL_HANDLING',
     }

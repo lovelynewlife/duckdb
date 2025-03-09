@@ -15,6 +15,11 @@ void DuckDBPyFunctional::Initialize(py::module_ &parent) {
 	    .value("DEFAULT", duckdb::FunctionNullHandling::DEFAULT_NULL_HANDLING)
 	    .value("SPECIAL", duckdb::FunctionNullHandling::SPECIAL_HANDLING)
 	    .export_values();
+
+	py::enum_<duckdb::PythonUDFKind>(m, "PythonUDFKind")
+		.value("COMMON", duckdb::PythonUDFKind::COMMON)
+		.value("PREDICTION", duckdb::PythonUDFKind::PREDICTION)
+		.export_values();
 }
 
 } // namespace duckdb

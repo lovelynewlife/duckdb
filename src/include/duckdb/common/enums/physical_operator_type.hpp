@@ -119,6 +119,12 @@ enum class PhysicalOperatorType : uint8_t {
 	// Secret
 	// -----------------------------
 	CREATE_SECRET,
+
+	// -----------------------------
+	// Prediction Operator (IMBridge Optimization)
+	// -----------------------------
+	PREDICTION_FILTER,
+	PREDICTION_PROJECTION
 };
 
 string PhysicalOperatorToString(PhysicalOperatorType type);
